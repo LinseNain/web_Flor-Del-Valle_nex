@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,16 +28,22 @@ export default function Navbar() {
         }}
         transition={{ duration: 0.3 }}
       >
-        {/* ↑ 14px más alto: py-4 → py-6 (4 + 10 extra = 14px más que py-3 original) */}
         <div className="container mx-auto px-5 py-6">
           <div className="flex items-center justify-between">
-            {/* LOGO A LA IZQUIERDA */}
+            {/* SOLO EL LOGO - SIN TEXTO */}
             <motion.div
-              className="text-xl md:text-2xl font-black tracking-tight text-gray-800"
+              className="relative w-65 h-15"
               whileHover={{ scale: 1.04 }}
               transition={{ type: "spring", stiffness: 400, damping: 15 }}
             >
-              VerdeMaestro
+              <Image
+                src="/logo_green.png"
+                alt="Logo"
+                fill
+                className="object-contain"
+                sizes="64x"
+                priority
+              />
             </motion.div>
 
             {/* Menú desktop + botón a la derecha */}
@@ -91,7 +98,7 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Menú móvil animado (solo los enlaces, sin repetir botón) */}
+          {/* Menú móvil animado */}
           <AnimatePresence>
             {isMenuOpen && (
               <motion.div

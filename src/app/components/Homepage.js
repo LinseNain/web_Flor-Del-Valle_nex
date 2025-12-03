@@ -1,8 +1,8 @@
 'use client';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// 🔥 ICONOS PREMIUM REDISEÑADOS CON ESTILO ORGÁNICO
+// 🔥 ICONOS (igual que antes, manteniendo consistencia)
 const Icons = {
   Phone: () => (
     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -128,7 +128,7 @@ const Icons = {
   )
 };
 
-// 🎨 PALETA DE COLORES - ADAPTADA AL #8ad341
+// 🎨 PALETA DE COLORES
 const colors = {
   primary: '#8ad341',
   primaryHover: '#7bc536',
@@ -148,7 +148,7 @@ const colors = {
   white: '#ffffff'
 };
 
-// 🏆 DATOS PREMIUM - COPYWRITING PERSUASIVO
+// 🏆 DATOS (igual que antes)
 const services = [
   {
     icon: Icons.Scissors,
@@ -337,23 +337,49 @@ const SectionHeader = ({ title, subtitle, number, isLight = false }) => (
 
 export default function Homepage() {
   const [activeService, setActiveService] = useState(0);
-  const [galleryIndex, setGalleryIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [autoRotate, setAutoRotate] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
+  // FUNCIÓN PARA SCROLL
+  const scrollToSection = (sectionId) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    setIsMenuOpen(false);
+  };
+
+  // FUNCIONES DEL CARRUSEL DE 3 IMÁGENES
+  const nextSlide = () => {
+    setCurrentSlide((prev) => {
+      const next = prev + 3;
+      return next >= galleryImages.length ? 0 : next;
+    });
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => {
+      const prevSlideIndex = prev - 3;
+      return prevSlideIndex < 0 ? Math.max(0, galleryImages.length - 3) : prevSlideIndex;
+    });
+  };
+
+  const goToSlide = (index) => {
+    setCurrentSlide(index * 3);
+  };
+
+  // USE EFFECTS
   useEffect(() => {
     if (!autoRotate) return;
     const serviceInterval = setInterval(() => {
       setActiveService(prev => (prev + 1) % services.length);
     }, 5000);
     return () => clearInterval(serviceInterval);
-  }, [autoRotate, services.length]);
+  }, [autoRotate]);
 
+  // CARRUSEL AUTOMÁTICO
   useEffect(() => {
     const galleryInterval = setInterval(() => {
-      nextGallery();
+      nextSlide();
     }, 6000);
     return () => clearInterval(galleryInterval);
   }, []);
@@ -371,32 +397,6 @@ export default function Homepage() {
     setTimeout(() => setAutoRotate(true), 15000);
   };
 
-  const nextGallery = useCallback(() => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    setGalleryIndex(prev => (prev + 1) % galleryImages.length);
-    setTimeout(() => setIsAnimating(false), 800);
-  }, [isAnimating, galleryImages.length]);
-
-  const prevGallery = useCallback(() => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    setGalleryIndex(prev => (prev - 1 + galleryImages.length) % galleryImages.length);
-    setTimeout(() => setIsAnimating(false), 800);
-  }, [isAnimating, galleryImages.length]);
-
-  const goToSlide = useCallback((index) => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    setGalleryIndex(index);
-    setTimeout(() => setIsAnimating(false), 800);
-  }, [isAnimating]);
-
-  const scrollToSection = (sectionId) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
-    setIsMenuOpen(false);
-  };
-
   const StarRating = ({ rating }) => (
     <div className="flex space-x-1 justify-center">
       {[...Array(5)].map((_, i) => (
@@ -405,9 +405,16 @@ export default function Homepage() {
     </div>
   );
 
+  // Obtener las 3 imágenes actuales para mostrar
+  const visibleImages = [];
+  for (let i = 0; i < 3; i++) {
+    const index = (currentSlide + i) % galleryImages.length;
+    visibleImages.push(galleryImages[index]);
+  }
+
   return (
     <div className="overflow-x-hidden">
-      {/* 🌟 HERO SECTION REVOLUCIONARIO */}
+      {/* 🌟 HERO SECTION */}
       <section id="inicio" className="relative h-screen min-h-[700px] overflow-hidden">
         <div className="absolute inset-0">
           <video
@@ -689,134 +696,105 @@ export default function Homepage() {
         </div>
       </section>
 
-      {/* 🖼️ GALERÍA PREMIUM */}
-      <section id="proyectos" className="py-20 md:py-28 lg:py-32 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-white to-blue-50" />
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0" style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%238ad341' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
-              backgroundSize: '40px 40px'
-            }} />
-          </div>
-        </div>
+      {/* 🖼️ NUEVO CARRUSEL DE 3 IMÁGENES */}
+      <section id="proyectos" className="py-20 md:py-28 lg:py-32 bg-gradient-to-br from-green-50 to-blue-50 relative overflow-hidden">
         <div className="container mx-auto px-3 sm:px-4 md:px-6 relative z-10">
           <SectionHeader
             title="Galería de Proyectos"
             subtitle="Donde la visión se encuentra con la ejecución perfecta"
             number="02"
           />
-          <div className="relative max-w-6xl mx-auto mb-12 md:mb-16">
-            <div className="relative h-[400px] sm:h-[500px] md:h-[600px] lg:h-[650px] rounded-2xl md:rounded-3xl overflow-hidden shadow-lg md:shadow-xl group">
-              <AnimatePresence mode="wait">
+
+          {/* Carrusel de 3 imágenes */}
+          <div className="relative max-w-6xl mx-auto">
+            <div className="relative">
+              {/* Botones de navegación */}
+              <button
+                onClick={prevSlide}
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 z-10 w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors border border-gray-200"
+                aria-label="Anterior"
+              >
+                <Icons.ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-gray-900" />
+              </button>
+
+              <button
+                onClick={nextSlide}
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 z-10 w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors border border-gray-200"
+                aria-label="Siguiente"
+              >
+                <Icons.ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-gray-900" />
+              </button>
+
+              {/* Contenedor de imágenes */}
+              <div className="overflow-hidden">
                 <motion.div
-                  key={galleryIndex}
-                  className="absolute inset-0"
-                  initial={{ opacity: 0, scale: 1.1 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.8 }}
+                  className="flex"
+                  initial={false}
+                  animate={{ x: `-${currentSlide * (100 / 3)}%` }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
                 >
-                  <img
-                    src={galleryImages[galleryIndex].src}
-                    alt={galleryImages[galleryIndex].alt}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
-                    <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 lg:p-10">
-                      <motion.div
-                        initial={{ opacity: 0, y: 25 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                      >
-                        <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-3 md:mb-4">
-                          <span className="px-3 py-1.5 md:px-4 md:py-2 rounded-lg md:rounded-xl text-[10px] md:text-xs font-bold border border-white/30 text-white backdrop-blur-md bg-white/10">
-                            {galleryImages[galleryIndex].category}
-                          </span>
-                          <span className="px-2 py-1 md:px-3 md:py-1.5 rounded-full text-[8px] md:text-xs font-semibold bg-white/20 backdrop-blur-sm text-white">
-                            {galleryImages[galleryIndex].year}
-                          </span>
+                  {galleryImages.map((image, index) => (
+                    <div
+                      key={index}
+                      className="w-1/3 flex-shrink-0 px-3"
+                    >
+                      <div className="relative group">
+                        <div className="aspect-square md:aspect-[4/5] overflow-hidden rounded-xl md:rounded-2xl shadow-lg">
+                          <img
+                            src={image.src}
+                            alt={image.alt}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          />
                         </div>
-                        <h3 className="text-lg md:text-2xl lg:text-3xl xl:text-4xl font-black text-white mb-4 md:mb-6 leading-tight tracking-tight">
-                          {galleryImages[galleryIndex].alt}
-                        </h3>
-                        <motion.button
-                          className="px-4 md:px-6 py-2.5 md:py-3.5 rounded-lg md:rounded-xl font-bold text-xs md:text-sm hover:bg-white transition-all duration-300 inline-flex items-center space-x-1.5 md:space-x-2.5 shadow-md md:shadow-lg group"
-                          style={{ background: colors.gradientPrimary, color: colors.dark }}
-                          whileHover={{ scale: 1.02, y: -1 }}
-                          whileTap={{ scale: 0.98 }}
-                        >
-                          <span>Ver Proyecto Completo</span>
-                          <Icons.ChevronRight className="w-3 h-3 md:w-4 md:h-4 group-hover:translate-x-0.5 md:group-hover:translate-x-1 transition-transform duration-300" />
-                        </motion.button>
-                      </motion.div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl md:rounded-2xl" />
+                        <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                          <div className="bg-white/90 backdrop-blur-sm rounded-lg md:rounded-xl p-3 md:p-4">
+                            <div className="flex flex-wrap gap-2 mb-2">
+                              <span className="px-2 py-1 bg-green-100 text-green-800 text-xs md:text-sm rounded-full font-medium">
+                                {image.category}
+                              </span>
+                              <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs md:text-sm rounded-full">
+                                {image.year}
+                              </span>
+                            </div>
+                            <h3 className="text-sm md:text-base lg:text-lg font-bold text-gray-900 mb-2">
+                              {image.alt}
+                            </h3>
+                            <button className="text-xs md:text-sm font-semibold text-green-600 hover:text-green-700 flex items-center gap-1">
+                              Ver detalles
+                              <Icons.ChevronRight className="w-3 h-3 md:w-4 md:h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  ))}
                 </motion.div>
-              </AnimatePresence>
-              <motion.button
-                onClick={prevGallery}
-                className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-md rounded-lg md:rounded-xl flex items-center justify-center shadow-md md:shadow-lg hover:bg-white transition-all duration-300 opacity-0 group-hover:opacity-100 border border-gray-200"
-                whileHover={{ scale: 1.1, x: -1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <Icons.ChevronLeft className="w-3 h-3 md:w-4 md:h-4" style={{ color: colors.dark }} />
-              </motion.button>
-              <motion.button
-                onClick={nextGallery}
-                className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-md rounded-lg md:rounded-xl flex items-center justify-center shadow-md md:shadow-lg hover:bg-white transition-all duration-300 opacity-0 group-hover:opacity-100 border border-gray-200"
-                whileHover={{ scale: 1.1, x: 1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <Icons.ChevronRight className="w-3 h-3 md:w-4 md:h-4" style={{ color: colors.dark }} />
-              </motion.button>
-              <div className="absolute bottom-4 md:bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-1.5 md:space-x-2">
-                {galleryImages.map((_, index) => (
-                  <motion.button
-                    key={index}
-                    onClick={() => goToSlide(index)}
-                    className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full transition-all duration-300 backdrop-blur border border-white/30 ${index === galleryIndex ? 'w-5 md:w-6 bg-white' : 'bg-white/50 hover:bg-white/80'
-                      }`}
-                    whileHover={{ scale: 1.2 }}
-                    whileTap={{ scale: 0.9 }}
-                  />
-                ))}
               </div>
             </div>
-          </div>
-          <motion.div
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2 md:gap-3 max-w-6xl mx-auto"
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            {galleryImages.map((image, index) => (
-              <motion.div
-                key={index}
-                className={`relative aspect-square rounded-lg md:rounded-xl lg:rounded-2xl overflow-hidden cursor-pointer group ${index === galleryIndex ? 'ring-1 md:ring-2 ring-offset-0.5 md:ring-offset-1 scale-[1.02] md:scale-105' : 'opacity-90 hover:opacity-100'
-                  } transition-all duration-300 shadow-sm md:shadow-md hover:shadow-md md:hover:shadow-lg`}
-                style={{ ringColor: colors.primary + '40' }}
-                onClick={() => goToSlide(index)}
-                whileHover={{ scale: 1.02, y: -1 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+
+            {/* Indicadores de página */}
+            <div className="flex justify-center gap-2 mt-8 md:mt-12">
+              {Array.from({ length: Math.ceil(galleryImages.length / 3) }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-300 ${Math.floor(currentSlide / 3) === index
+                    ? 'bg-green-600 scale-125'
+                    : 'bg-gray-300 hover:bg-gray-400'
+                    }`}
+                  aria-label={`Ir a página ${index + 1}`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" />
-                <div className="absolute bottom-1.5 left-1.5 right-1.5 transform translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                  <div className="text-white text-[8px] md:text-xs font-semibold truncate">{image.category}</div>
-                  <div className="text-white/80 text-[7px] md:text-[10px]">{image.year}</div>
-                </div>
-                {index === galleryIndex && (
-                  <div className="absolute top-1.5 right-1.5 w-1 h-1 md:w-1.5 md:h-1.5 rounded-full animate-pulse bg-white shadow" />
-                )}
-              </motion.div>
-            ))}
-          </motion.div>
+              ))}
+            </div>
+
+            {/* Contador */}
+            <div className="text-center mt-4">
+              <span className="text-sm md:text-base font-medium text-gray-600">
+                {Math.floor(currentSlide / 3) + 1} / {Math.ceil(galleryImages.length / 3)}
+              </span>
+            </div>
+          </div>
         </div>
       </section>
 
