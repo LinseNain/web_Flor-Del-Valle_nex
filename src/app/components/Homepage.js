@@ -125,21 +125,6 @@ const Icons = {
     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
     </svg>
-  ),
-  Lightbulb: () => (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-    </svg>
-  ),
-  Water: () => (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 19c0-3.87 3.13-7 7-7 1.08 0 2.09.25 3 .7V10c0-3.22-2.78-6-6-6a6 6 0 00-6 6v9h12v-3c0-1.65-1.35-3-3-3s-3 1.35-3 3" />
-    </svg>
-  ),
-  Sun: () => (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-    </svg>
   )
 };
 
@@ -295,25 +280,28 @@ const advantages = [
   }
 ];
 
-// REEMPLAZAMOS LOS TESTIMONIOS POR TIPS PRÁCTICOS
-const tips = [
+// SOLO CAMBIAMOS ESTE ARRAY DE TESTIMONIOS POR TIPS
+const testimonials = [
   {
-    icon: Icons.Water,
-    title: "Riego inteligente",
+    name: "Riego Inteligente",
+    role: "Consejo de cuidado",
     content: "Riega al amanecer o atardecer para reducir la evaporación. Las plantas absorben mejor el agua cuando hace menos calor.",
-    category: "Cuidado básico"
+    rating: 5,
+    project: "Técnica eficiente"
   },
   {
-    icon: Icons.Sun,
-    title: "Ubicación adecuada",
+    name: "Ubicación Adecuada",
+    role: "Consejo de diseño",
     content: "Coloca cada planta donde reciba la luz que necesita. Observa tu jardín durante el día para conocer las zonas de sol y sombra.",
-    category: "Planificación"
+    rating: 5,
+    project: "Planificación ideal"
   },
   {
-    icon: Icons.Sprout,
-    title: "Poda en su momento",
+    name: "Poda en su Momento",
+    role: "Consejo de mantenimiento",
     content: "La mejor época para podar la mayoría de árboles es a finales de invierno, cuando están en reposo pero a punto de despertar.",
-    category: "Mantenimiento"
+    rating: 5,
+    project: "Técnica profesional"
   }
 ];
 
@@ -422,7 +410,7 @@ export default function Homepage() {
   const [activeService, setActiveService] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [autoRotate, setAutoRotate] = useState(true);
-  const [activeTip, setActiveTip] = useState(0); // Cambiado de activeTestimonial a activeTip
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [imagesPerView, setImagesPerView] = useState(3);
   const slideIntervalRef = useRef(null);
 
@@ -509,10 +497,10 @@ export default function Homepage() {
   }, [autoRotate]);
 
   useEffect(() => {
-    const tipInterval = setInterval(() => {
-      setActiveTip(prev => (prev + 1) % tips.length);
+    const testimonialInterval = setInterval(() => {
+      setActiveTestimonial(prev => (prev + 1) % testimonials.length);
     }, 7000);
-    return () => clearInterval(tipInterval);
+    return () => clearInterval(testimonialInterval);
   }, []);
 
   const handleServiceClick = (index) => {
@@ -938,7 +926,7 @@ export default function Homepage() {
         </div>
       </section>
 
-      {/* ⭐ EXPERIENCIA & TIPS */}
+      {/* ⭐ EXPERIENCIA & TESTIMONIOS */}
       <section id="experiencia" className="py-16 md:py-24 lg:py-32 bg-white relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 md:px-8">
           <SectionHeader
@@ -991,43 +979,42 @@ export default function Homepage() {
                 </div>
                 <AnimatePresence mode="wait">
                   <motion.div
-                    key={activeTip}
+                    key={activeTestimonial}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.4 }}
                     className="text-center px-1"
                   >
-                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-md"
-                      style={{ background: colors.gradientLight }}>
-                      {React.createElement(tips[activeTip].icon, {
-                        className: "text-base md:text-lg",
-                        style: { color: colors.primary }
-                      })}
-                    </div>
-                    <h4 className="text-base md:text-lg font-black mb-2 md:mb-3 text-gray-900">
-                      {tips[activeTip].title}
-                    </h4>
+                    <StarRating rating={testimonials[activeTestimonial].rating} />
                     <p className="text-xs md:text-sm lg:text-base leading-relaxed font-normal text-gray-800 my-4 md:my-5 italic border-l-2 md:border-l-3 pl-2 md:pl-4" style={{ borderColor: colors.primary }}>
-                      "{tips[activeTip].content}"
+                      "{testimonials[activeTestimonial].content}"
                     </p>
+                    <div className="mb-2 md:mb-3">
+                      <div className="text-sm md:text-base font-black text-gray-900 mb-0.5 md:mb-1">
+                        {testimonials[activeTestimonial].name}
+                      </div>
+                      <div className="text-xs md:text-sm font-semibold" style={{ color: colors.primary }}>
+                        {testimonials[activeTestimonial].role}
+                      </div>
+                    </div>
                     <div className="inline-flex items-center px-2 py-0.5 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider"
                       style={{ background: colors.primary + '20', color: colors.primary }}>
-                      <Icons.Lightbulb className="w-2 h-2 md:w-3 md:h-3 mr-0.5 md:mr-1" />
-                      {tips[activeTip].category}
+                      <Icons.Award className="w-2 h-2 md:w-3 md:h-3 mr-0.5 md:mr-1" />
+                      {testimonials[activeTestimonial].project}
                     </div>
                   </motion.div>
                 </AnimatePresence>
                 <div className="flex justify-center space-x-1.5 md:space-x-2 mt-4 md:mt-6">
-                  {tips.map((_, index) => (
+                  {testimonials.map((_, index) => (
                     <button
                       key={index}
-                      onClick={() => setActiveTip(index)}
-                      className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full transition-all duration-300 ${index === activeTip
+                      onClick={() => setActiveTestimonial(index)}
+                      className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full transition-all duration-300 ${index === activeTestimonial
                         ? 'w-4 md:w-5 shadow'
                         : 'bg-gray-300 hover:bg-gray-400'
                         }`}
-                      style={{ backgroundColor: index === activeTip ? colors.primary : undefined }}
+                      style={{ backgroundColor: index === activeTestimonial ? colors.primary : undefined }}
                     />
                   ))}
                 </div>
