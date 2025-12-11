@@ -125,6 +125,21 @@ const Icons = {
     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
     </svg>
+  ),
+  Lightbulb: () => (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+    </svg>
+  ),
+  Water: () => (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 19c0-3.87 3.13-7 7-7 1.08 0 2.09.25 3 .7V10c0-3.22-2.78-6-6-6a6 6 0 00-6 6v9h12v-3c0-1.65-1.35-3-3-3s-3 1.35-3 3" />
+    </svg>
+  ),
+  Sun: () => (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+    </svg>
   )
 };
 
@@ -148,53 +163,53 @@ const colors = {
   white: '#ffffff'
 };
 
-// 🏆 DATOS
+// 🏆 DATOS - TEXTO HUMANIZADO
 const services = [
   {
     icon: Icons.Scissors,
     title: "Podas Expertas",
-    description: "Transformamos tus árboles con técnicas profesionales que realzan su belleza natural y garantizan su salud a largo plazo.",
-    details: ["Podas de formación para desarrollo óptimo", "Técnicas de seguridad avanzadas", "Mantenimiento estacional programado", "Limpieza integral post-intervención", "Asesoramiento botánico personalizado"],
+    description: "Cuidamos de tus árboles como si fueran nuestros. Con técnicas que respetan su crecimiento natural y garantizan su salud para que disfrutes de ellos muchos años.",
+    details: ["Aseguramos el desarrollo sano de tus árboles", "Trabajamos con máxima seguridad para todos", "Programamos los cuidados según cada estación", "Dejamos todo limpio y ordenado", "Te asesoramos sobre el cuidado de tus plantas"],
     color: colors.primary,
     featured: true
   },
   {
     icon: Icons.Tree,
     title: "Diseño de Jardines",
-    description: "Creamos espacios verdes que cuentan tu historia. Desde conceptos minimalistas hasta jardines exuberantes, cada diseño es único.",
-    details: ["Diseño paisajístico personalizado", "Selección de especies autóctonas", "Sistemas de riego inteligente", "Iluminación profesional", "Mantenimiento evolutivo"],
+    description: "Creamos espacios verdes que son una extensión de tu hogar. Desde jardines sencillos hasta proyectos más elaborados, cada diseño cuenta tu historia.",
+    details: ["Un diseño pensado especialmente para ti", "Elegimos plantas que crecen bien en nuestra zona", "Sistemas de riego que ahorran agua", "Una iluminación que crea ambiente", "Te acompañamos en el mantenimiento"],
     color: colors.secondary,
     featured: true
   },
   {
     icon: Icons.Pool,
     title: "Piscinas Naturales",
-    description: "Integramos piscinas que parecen extensiones naturales de tu jardín, con sistemas de filtrado ecológico y bajo mantenimiento.",
-    details: ["Diseño de piscinas naturales", "Sistemas de filtrado biológico", "Mantenimiento ecológico", "Integración paisajística", "Control de calidad del agua"],
+    description: "Integramos piscinas que parecen parte del paisaje, con sistemas de filtrado que cuidan el medio ambiente y requieren menos mantenimiento.",
+    details: ["Piscinas que se integran con la naturaleza", "Filtración natural sin productos químicos agresivos", "Cuidado respetuoso con el entorno", "Un diseño que parece que siempre estuvo ahí", "Controlamos la calidad del agua de forma natural"],
     color: colors.primaryDark,
     featured: false
   },
   {
     icon: Icons.Leaf,
     title: "Mantenimiento Integral",
-    description: "Tu jardín siempre perfecto con nuestro servicio de mantenimiento continuo. Césped impecable, setos definidos y plantas saludables.",
-    details: ["Mantenimiento programado", "Control de plagas natural", "Fertilización orgánica", "Riego optimizado", "Informes periódicos"],
+    description: "Nos encargamos de que tu jardín siempre esté bonito. Césped cuidado, setos bien definidos y plantas saludables para que tú solo tengas que disfrutar.",
+    details: ["Visitamos tu jardín regularmente", "Controlamos plagas de forma natural", "Usamos fertilizantes orgánicos", "Optimizamos el riego para ahorrar agua", "Te contamos cómo va todo con informes periódicos"],
     color: colors.primary,
     featured: false
   },
   {
     icon: Icons.Hammer,
     title: "Paisajismo Creativo",
-    description: "Construimos terrazas, caminos y estructuras que se integran armoniosamente con la naturaleza, usando materiales premium.",
-    details: ["Construcción de terrazas", "Diseño de caminos naturales", "Instalación de sistemas", "Estructuras de madera", "Integración de elementos agua"],
+    description: "Construimos terrazas, caminos y estructuras que se integran perfectamente con la naturaleza, usando materiales de calidad que duran años.",
+    details: ["Terrazas donde disfrutar del aire libre", "Caminos que invitan a pasear", "Sistemas que funcionan sin problemas", "Estructuras de madera con buen acabado", "Incluimos agua para crear ambientes especiales"],
     color: colors.secondary,
     featured: false
   },
   {
     icon: Icons.Sparkles,
-    title: "Soluciones Completas",
-    description: "Servicios llave en mano para comunidades y empresas. Gestionamos todo el proceso para tu máxima tranquilidad.",
-    details: ["Gestión integral de proyectos", "Contratos personalizados", "Respuesta 24/7 emergencias", "Coordinación con comunidades", "Documentación completa"],
+    title: "Servicio Completo",
+    description: "Te ayudamos con todo el proceso. Para comunidades y empresas, gestionamos cada detalle para que tú solo tengas que preocuparte de disfrutar los resultados.",
+    details: ["Nos encargamos de todo, desde el principio", "Contratos claros y sin letra pequeña", "Estamos disponibles para cualquier urgencia", "Coordinamos con los vecinos sin problemas", "Te damos toda la documentación organizada"],
     color: colors.primaryDark,
     featured: true
   }
@@ -204,50 +219,50 @@ const services = [
 const galleryImages = [
   {
     src: "/c-1.jpg",
-    alt: "Jardín contemporáneo con diseño minimalista",
-    category: "Diseño Premium",
+    alt: "Jardín moderno con diseño limpio y natural",
+    category: "Jardín Familiar",
     year: "2024",
     placeholder: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&auto=format&fit=crop&q=60"
   },
   {
     src: "/c-2.jpg",
-    alt: "Paisaje urbano transformado en oasis verde",
-    category: "Paisajismo Urbano",
+    alt: "Espacio urbano convertido en un rincón verde",
+    category: "Transformación Urbana",
     year: "2024",
     placeholder: "https://images.unsplash.com/photo-1564352969906-8b7f46ba4b8e?w-800&auto=format&fit=crop&q=60"
   },
   {
     src: "/c-3.jpg",
-    alt: "Terraza moderna con integración natural perfecta",
-    category: "Arquitectura Verde",
+    alt: "Terraza donde se funden interior y exterior",
+    category: "Integración Natural",
     year: "2023",
     placeholder: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&auto=format&fit=crop&q=60"
   },
   {
     src: "/c-4.jpg",
-    alt: "Jardín mediterráneo recuperado y revitalizado",
-    category: "Restauración",
+    alt: "Jardín mediterráneo recuperado con cariño",
+    category: "Rehabilitación",
     year: "2023",
     placeholder: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&auto=format&fit=crop&q=60"
   },
   {
     src: "/c-5.jpg",
-    alt: "Espacio sostenible con especies autóctonas",
+    alt: "Espacio sostenible con plantas de la zona",
     category: "Diseño Sostenible",
     year: "2024",
     placeholder: "https://images.unsplash.com/photo-1564352969906-8b7f46ba4b8e?w-800&auto=format&fit=crop&q=60"
   },
   {
     src: "/c-6.jpg",
-    alt: "Área de relax con elementos agua integrados",
-    category: "Wellness Garden",
+    alt: "Zona de descanso con agua integrada",
+    category: "Espacio de Relax",
     year: "2024",
     placeholder: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&auto=format&fit=crop&q=60"
   },
   {
     src: "/c-7.jpg",
-    alt: "Jardín vertical en entorno corporativo",
-    category: "Paisajismo Corporativo",
+    alt: "Jardín vertical en un espacio de trabajo",
+    category: "Entorno Laboral",
     year: "2023",
     placeholder: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&auto=format&fit=crop&q=60"
   }
@@ -256,71 +271,69 @@ const galleryImages = [
 const advantages = [
   {
     icon: Icons.Award,
-    title: "Excelencia Garantizada",
-    description: "25 años de experiencia respaldan cada proyecto. Certificados en técnicas sostenibles y diseño paisajístico avanzado.",
+    title: "Experiencia Real",
+    description: "25 años cuidando jardines nos han enseñado lo que realmente importa: entender las plantas y escuchar a las personas.",
     stat: "25+ años"
   },
   {
     icon: Icons.Users,
-    title: "Equipo Especializado",
-    description: "Botánicos, diseñadores y técnicos trabajando en armonía. Formación continua en las últimas tendencias del paisajismo.",
-    stat: "15+ expertos"
+    title: "Equipo de Verdaderos Expertos",
+    description: "Botánicos, diseñadores y técnicos que trabajan juntos. Gente que ama las plantas y disfruta creando espacios bonitos.",
+    stat: "15+ personas"
   },
   {
     icon: Icons.Heart,
-    title: "Compromiso Total",
-    description: "No solo creamos jardines, creamos conexiones emocionales. Tu satisfacción es nuestro principal indicador de éxito.",
+    title: "Compromiso de Verdad",
+    description: "No hacemos solo jardines, creamos espacios donde las familias crean recuerdos. Tu satisfacción es lo que nos hace seguir mejorando.",
     stat: "98% clientes"
   },
   {
     icon: Icons.Clock,
-    title: "Puntualidad Absoluta",
-    description: "Cumplimos plazos con precisión suiza. Tu tiempo es valioso y lo respetamos en cada fase del proyecto.",
-    stat: "100% puntual"
+    title: "Cumplimos lo que Decimos",
+    description: "Valoramos tu tiempo tanto como el nuestro. Cuando decimos una fecha, la cumplimos. Así de sencillo.",
+    stat: "100% puntuales"
   }
 ];
 
-const testimonials = [
+// REEMPLAZAMOS LOS TESTIMONIOS POR TIPS PRÁCTICOS
+const tips = [
   {
-    name: "María González",
-    role: "Propietaria de Villa Las Rosas",
-    content: "Transformaron completamente nuestro jardín. El equipo fue profesional, creativo y respetuoso con nuestro espacio. ¡Increíble!",
-    rating: 5,
-    project: "Jardín residencial 500m²"
+    icon: Icons.Water,
+    title: "Riego inteligente",
+    content: "Riega al amanecer o atardecer para reducir la evaporación. Las plantas absorben mejor el agua cuando hace menos calor.",
+    category: "Cuidado básico"
   },
   {
-    name: "Community Gardens SL",
-    role: "Administrador de finca",
-    content: "Llevamos 3 años con su servicio de mantenimiento y los espacios comunes nunca habían estado tan bien. Excelente relación calidad-precio.",
-    rating: 5,
-    project: "Mantenimiento comunidad"
+    icon: Icons.Sun,
+    title: "Ubicación adecuada",
+    content: "Coloca cada planta donde reciba la luz que necesita. Observa tu jardín durante el día para conocer las zonas de sol y sombra.",
+    category: "Planificación"
   },
   {
-    name: "TechHub Offices",
-    role: "Director de Facilities",
-    content: "Crearon un entorno de trabajo que ha mejorado significativamente el bienestar de nuestros empleados. Diseño innovador y ejecución impecable.",
-    rating: 5,
-    project: "Paisajismo corporativo"
+    icon: Icons.Sprout,
+    title: "Poda en su momento",
+    content: "La mejor época para podar la mayoría de árboles es a finales de invierno, cuando están en reposo pero a punto de despertar.",
+    category: "Mantenimiento"
   }
 ];
 
 const clientTypes = [
   {
     icon: Icons.Home,
-    title: "Hogares Exclusivos",
-    description: "Jardines personalizados que reflejan tu estilo de vida. Espacios familiares, áreas de relax y entornos que inspiran.",
-    projects: "150+ realizados"
+    title: "Familias",
+    description: "Jardines para que los niños jueguen, para comer al aire libre, para leer un libro en paz. Espacios donde la vida pasa.",
+    projects: "150+ familias"
   },
   {
     icon: Icons.Building,
-    title: "Comunidades Premium",
-    description: "Gestión integral de zonas comunes. Valoramos tu propiedad y creamos entornos que todos los vecinos disfrutan.",
+    title: "Comunidades de Vecinos",
+    description: "Cuidamos los espacios que todos compartimos. Jardines donde los vecinos se encuentran y disfrutan juntos.",
     projects: "80+ comunidades"
   },
   {
     icon: Icons.Briefcase,
-    title: "Corporaciones",
-    description: "Espacios verdes que transmiten los valores de tu marca. Mejora la productividad y el bienestar corporativo.",
+    title: "Empresas",
+    description: "Espacios verdes que hacen que ir a trabajar sea más agradable. Donde los equipos descansan y se inspiran.",
     projects: "45+ empresas"
   }
 ];
@@ -328,27 +341,27 @@ const clientTypes = [
 const processSteps = [
   {
     icon: Icons.Phone,
-    title: "Consulta Personal",
-    description: "Te escuchamos, comprendemos tus sueños y analizamos tu espacio. Sin compromiso, con transparencia absoluta.",
+    title: "Charlamos Contigo",
+    description: "Primero escuchamos. Queremos saber qué sueñas para tu espacio, qué te gusta, cómo vives. Sin compromiso, hablando claro.",
     duration: "1-2 días"
   },
   {
     icon: Icons.Mail,
-    title: "Propuesta Detallada",
-    description: "Recibirás un plan completo con visualizaciones 3D, cronograma claro y presupuesto desglosado sin sorpresas.",
+    title: "Te Contamos Nuestra Idea",
+    description: "Te mostramos un plan completo con dibujos en 3D, un calendario claro y un presupuesto detallado. Sin sorpresas.",
     duration: "3-5 días"
   },
   {
     icon: Icons.Hammer,
-    title: "Ejecución Perfecta",
-    description: "Nuestro equipo especializado materializa tu proyecto manteniéndote informado en cada etapa del proceso.",
-    duration: "Variable"
+    title: "Hacemos Realidad tu Jardín",
+    description: "Nuestro equipo trabaja manteniéndote informado en cada paso. Verás cómo tu idea toma forma día a día.",
+    duration: "Depende del proyecto"
   },
   {
     icon: Icons.Check,
-    title: "Entrega y Soporte",
-    description: "Te entregamos tu espacio soñado y seguimos disponibles para garantizar su evolución y belleza permanente.",
-    duration: "Seguimiento continuo"
+    title: "Te Entregamos y Seguimos",
+    description: "Te damos las llaves de tu nuevo espacio y seguimos disponibles para lo que necesites. Tu jardín evoluciona y nosotros con él.",
+    duration: "Seguimos cerca"
   }
 ];
 
@@ -409,7 +422,7 @@ export default function Homepage() {
   const [activeService, setActiveService] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [autoRotate, setAutoRotate] = useState(true);
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [activeTip, setActiveTip] = useState(0); // Cambiado de activeTestimonial a activeTip
   const [imagesPerView, setImagesPerView] = useState(3);
   const slideIntervalRef = useRef(null);
 
@@ -496,10 +509,10 @@ export default function Homepage() {
   }, [autoRotate]);
 
   useEffect(() => {
-    const testimonialInterval = setInterval(() => {
-      setActiveTestimonial(prev => (prev + 1) % testimonials.length);
+    const tipInterval = setInterval(() => {
+      setActiveTip(prev => (prev + 1) % tips.length);
     }, 7000);
-    return () => clearInterval(testimonialInterval);
+    return () => clearInterval(tipInterval);
   }, []);
 
   const handleServiceClick = (index) => {
@@ -579,7 +592,7 @@ export default function Homepage() {
               className="inline-flex items-center space-x-2 md:space-x-3 bg-white/10 backdrop-blur-lg text-white px-4 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl mb-6 md:mb-8 border border-white/20 shadow-lg md:shadow-2xl"
             >
               <Icons.Award className="text-green-300 w-4 h-4 md:w-5 md:h-5" />
-              <span className="font-bold text-xs md:text-sm tracking-widest uppercase">Excelencia en Paisajismo desde 1999</span>
+              <span className="font-bold text-xs md:text-sm tracking-widest uppercase">+ de 25 años Cuidando jardines </span>
             </motion.div>
             <motion.h1
               initial={{ opacity: 0, y: 40 }}
@@ -587,8 +600,8 @@ export default function Homepage() {
               transition={{ duration: 1, delay: 0.5 }}
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-4 md:mb-6 leading-none tracking-tight"
             >
-              <span className="block">NATURALEZA</span>
-              <span className="block" style={{ color: colors.primaryLight }}>REDEFINIDA</span>
+              <span className="block">JARDINES</span>
+              <span className="block" style={{ color: colors.primaryLight }}>CON ALMA</span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 30 }}
@@ -596,7 +609,7 @@ export default function Homepage() {
               transition={{ duration: 0.8, delay: 0.7 }}
               className="text-base md:text-lg lg:text-xl text-white/90 mb-8 md:mb-12 max-w-xl leading-relaxed font-light"
             >
-              Transformamos espacios ordinarios en experiencias extraordinarias. Donde la innovación se encuentra con la naturaleza.
+              Creamos espacios donde la naturaleza y las personas se encuentran. Donde tus momentos especiales tienen el marco perfecto.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -612,7 +625,7 @@ export default function Homepage() {
                 whileTap={{ scale: 0.98 }}
               >
                 <span className="relative z-10 flex items-center justify-center space-x-2 md:space-x-3">
-                  <span className="text-center">Iniciar Proyecto</span>
+                  <span className="text-center">Cuéntanos tu idea</span>
                   <Icons.ChevronRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform duration-300" />
                 </span>
                 <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
@@ -623,7 +636,7 @@ export default function Homepage() {
               >
                 <span className="group-hover:translate-x-1 md:group-hover:translate-x-2 transition-transform duration-300 inline-flex items-center justify-center space-x-2 md:space-x-3">
                   <Icons.Camera className="w-4 h-4 md:w-5 md:h-5" />
-                  <span className="text-center">Ver Proyectos</span>
+                  <span className="text-center">Ver nuestros trabajos</span>
                 </span>
               </button>
             </motion.div>
@@ -634,10 +647,10 @@ export default function Homepage() {
               className="flex flex-wrap justify-center gap-3 md:gap-4 mt-10 pt-6 md:mt-12 md:pt-8 border-t border-white/20"
             >
               {[
-                { number: "500+", label: "Proyectos Completados" },
-                { number: "25+", label: "Años de Experiencia" },
-                { number: "98%", label: "Clientes Satisfechos" },
-                { number: "15+", label: "Premios Internacionales" }
+                { number: "500+", label: "Jardines creados" },
+                { number: "25+", label: "Años de experiencia" },
+                { number: "98%", label: "Familias contentas" },
+                { number: "15+", label: "Personas en el equipo" }
               ].map((stat, index) => (
                 <div key={index} className="text-center">
                   <div className="text-base md:text-lg font-black text-white mb-1">{stat.number}</div>
@@ -676,8 +689,8 @@ export default function Homepage() {
         </div>
         <div className="container mx-auto px-4 sm:px-6 md:px-8 relative z-10">
           <SectionHeader
-            title="Servicios de Excelencia"
-            subtitle="Soluciones integrales que transforman espacios y emociones"
+            title="Lo que hacemos por ti"
+            subtitle="Servicios que hacen que disfrutar de tu jardín sea fácil y bonito"
             number="01"
           />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-start">
@@ -803,7 +816,7 @@ export default function Homepage() {
                   whileTap={{ scale: 0.98 }}
                 >
                   <span className="flex items-center justify-center space-x-0.5 md:space-x-1.5">
-                    <span>Solicitar {services[activeService].title}</span>
+                    <span>Hablar sobre {services[activeService].title}</span>
                     <Icons.ChevronRight className="w-2.5 h-2.5 md:w-3.5 md:h-3.5 group-hover:translate-x-0.5 md:group-hover:translate-x-1 transition-transform duration-300" />
                   </span>
                 </motion.button>
@@ -817,8 +830,8 @@ export default function Homepage() {
       <section id="proyectos" className="py-16 md:py-24 lg:py-32 bg-gradient-to-br from-green-50 to-blue-50 relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 md:px-8 relative z-10">
           <SectionHeader
-            title="Galería de Proyectos"
-            subtitle="Donde la visión se encuentra con la ejecución perfecta"
+            title="Jardines que hemos creado"
+            subtitle="Espacios donde las familias viven momentos especiales"
             number="02"
           />
 
@@ -925,12 +938,12 @@ export default function Homepage() {
         </div>
       </section>
 
-      {/* ⭐ EXPERIENCIA & TESTIMONIOS */}
+      {/* ⭐ EXPERIENCIA & TIPS */}
       <section id="experiencia" className="py-16 md:py-24 lg:py-32 bg-white relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 md:px-8">
           <SectionHeader
-            title="Experiencia y Confianza"
-            subtitle="La excelencia se mide por la satisfacción de quienes confían en nosotros"
+            title="Lo que nos hace diferentes"
+            subtitle="La confianza se gana cuidando los detalles y escuchando a las personas"
             number="03"
           />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
@@ -972,48 +985,49 @@ export default function Homepage() {
               <div className="bg-gradient-to-br from-gray-50 to-white rounded-xl md:rounded-2xl p-5 md:p-8 shadow-md md:shadow-lg border border-gray-100">
                 <div className="text-center mb-5 md:mb-6">
                   <h3 className="text-lg md:text-xl lg:text-2xl font-black mb-2 md:mb-3 text-gray-900">
-                    Lo Que Dicen Nuestros Clientes
+                    Consejos prácticos para tu jardín
                   </h3>
                   <div className="w-16 h-1 rounded-full mx-auto" style={{ background: colors.gradientPrimary }} />
                 </div>
                 <AnimatePresence mode="wait">
                   <motion.div
-                    key={activeTestimonial}
+                    key={activeTip}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.4 }}
                     className="text-center px-1"
                   >
-                    <StarRating rating={testimonials[activeTestimonial].rating} />
-                    <p className="text-xs md:text-sm lg:text-base leading-relaxed font-normal text-gray-800 my-4 md:my-5 italic border-l-2 md:border-l-3 pl-2 md:pl-4" style={{ borderColor: colors.primary }}>
-                      "{testimonials[activeTestimonial].content}"
-                    </p>
-                    <div className="mb-2 md:mb-3">
-                      <div className="text-sm md:text-base font-black text-gray-900 mb-0.5 md:mb-1">
-                        {testimonials[activeTestimonial].name}
-                      </div>
-                      <div className="text-xs md:text-sm font-semibold" style={{ color: colors.primary }}>
-                        {testimonials[activeTestimonial].role}
-                      </div>
+                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 shadow-md"
+                      style={{ background: colors.gradientLight }}>
+                      {React.createElement(tips[activeTip].icon, {
+                        className: "text-base md:text-lg",
+                        style: { color: colors.primary }
+                      })}
                     </div>
+                    <h4 className="text-base md:text-lg font-black mb-2 md:mb-3 text-gray-900">
+                      {tips[activeTip].title}
+                    </h4>
+                    <p className="text-xs md:text-sm lg:text-base leading-relaxed font-normal text-gray-800 my-4 md:my-5 italic border-l-2 md:border-l-3 pl-2 md:pl-4" style={{ borderColor: colors.primary }}>
+                      "{tips[activeTip].content}"
+                    </p>
                     <div className="inline-flex items-center px-2 py-0.5 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider"
                       style={{ background: colors.primary + '20', color: colors.primary }}>
-                      <Icons.Award className="w-2 h-2 md:w-3 md:h-3 mr-0.5 md:mr-1" />
-                      {testimonials[activeTestimonial].project}
+                      <Icons.Lightbulb className="w-2 h-2 md:w-3 md:h-3 mr-0.5 md:mr-1" />
+                      {tips[activeTip].category}
                     </div>
                   </motion.div>
                 </AnimatePresence>
                 <div className="flex justify-center space-x-1.5 md:space-x-2 mt-4 md:mt-6">
-                  {testimonials.map((_, index) => (
+                  {tips.map((_, index) => (
                     <button
                       key={index}
-                      onClick={() => setActiveTestimonial(index)}
-                      className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full transition-all duration-300 ${index === activeTestimonial
+                      onClick={() => setActiveTip(index)}
+                      className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full transition-all duration-300 ${index === activeTip
                         ? 'w-4 md:w-5 shadow'
                         : 'bg-gray-300 hover:bg-gray-400'
                         }`}
-                      style={{ backgroundColor: index === activeTestimonial ? colors.primary : undefined }}
+                      style={{ backgroundColor: index === activeTip ? colors.primary : undefined }}
                     />
                   ))}
                 </div>
@@ -1032,8 +1046,8 @@ export default function Homepage() {
         <div className="absolute inset-0" style={{ background: colors.gradientDark, opacity: 0.92 }} />
         <div className="container mx-auto px-4 sm:px-6 md:px-8 relative z-10">
           <SectionHeader
-            title="Para Quiénes Creamos"
-            subtitle="Adaptamos nuestras soluciones a las necesidades únicas de cada cliente"
+            title="Para quiénes trabajamos"
+            subtitle="Creamos espacios para todo tipo de personas y lugares"
             number="04"
             isLight
           />
@@ -1071,8 +1085,8 @@ export default function Homepage() {
       <section id="proceso" className="py-16 md:py-24 lg:py-32 bg-white relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 md:px-8">
           <SectionHeader
-            title="Nuestro Proceso"
-            subtitle="Un camino claro y transparente hacia el jardín de tus sueños"
+            title="Cómo trabajamos"
+            subtitle="Un camino sencillo y claro hacia el jardín que imaginas"
             number="05"
           />
           <div className="relative">
@@ -1136,39 +1150,39 @@ export default function Homepage() {
               <div className="relative z-10">
                 <div className="text-center lg:text-left mb-6 md:mb-8">
                   <h2 className="text-2xl md:text-3xl lg:text-4xl font-black mb-3 md:mb-4 tracking-tight text-gray-900">
-                    Hablemos de tu Proyecto
+                    Hablemos de tu jardín
                   </h2>
                   <p className="text-base md:text-lg lg:text-xl text-gray-600 max-w-2xl leading-relaxed font-light">
-                    Comienza la transformación de tu espacio hoy mismo
+                    Empieza a crear el espacio donde vivirás momentos especiales
                   </p>
                   <div className="w-16 h-1 rounded-full mx-auto lg:mx-0 mt-3 md:mt-4"
                     style={{ background: colors.gradientPrimary }} />
                 </div>
                 <p className="text-sm md:text-base mb-4 md:mb-6 leading-relaxed font-light text-gray-600">
-                  Cada jardín cuenta una historia única. Ayúdanos a escribir la tuya. Estamos aquí para escuchar tus ideas y convertirlas en realidad.
+                  Cada jardín tiene su propia historia. Ayúdanos a escribir la tuya. Estamos aquí para escuchar lo que sueñas y hacerlo realidad.
                 </p>
                 <div className="space-y-3 md:space-y-4 mb-4 md:mb-6">
                   {[
                     {
                       icon: Icons.Phone,
-                      title: "Consulta Inmediata",
+                      title: "Habla con nosotros",
                       description: "+34 600 000 000",
-                      subtext: "Lun a Sáb: 8:00 - 20:00",
+                      subtext: "Lunes a Sábado: 8:00 - 20:00",
                       action: "Llamar ahora"
                     },
                     {
                       icon: Icons.Mail,
-                      title: "Email Prioritario",
+                      title: "Escríbenos",
                       description: "hola@verdevivo.com",
-                      subtext: "Respuesta en menos de 4h",
-                      action: "Enviar email"
+                      subtext: "Te contestamos en menos de 4 horas",
+                      action: "Enviar mensaje"
                     },
                     {
                       icon: Icons.MapPin,
-                      title: "Servicio en Madrid",
+                      title: "Estamos en Madrid",
                       description: "Comunidad de Madrid",
-                      subtext: "Desplazamiento gratuito",
-                      action: "Ver cobertura"
+                      subtext: "Nos desplazamos sin coste adicional",
+                      action: "Ver zona"
                     }
                   ].map((item, index) => (
                     <motion.div
@@ -1202,9 +1216,9 @@ export default function Homepage() {
                       <Icons.Heart className="text-[12px] md:text-sm text-white" />
                     </div>
                     <div className="min-w-0">
-                      <h4 className="font-bold text-[12px] md:text-sm mb-0.5 md:mb-1 text-gray-900">Compromiso Total</h4>
+                      <h4 className="font-bold text-[12px] md:text-sm mb-0.5 md:mb-1 text-gray-900">Nuestra forma de trabajar</h4>
                       <p className="text-[10px] md:text-xs font-light text-gray-600 truncate">
-                        Atención personalizada • Presupuestos transparentes • Resultados garantizados
+                        Te escuchamos • Presupuestos claros • Resultados que te gustarán
                       </p>
                     </div>
                   </div>
@@ -1221,13 +1235,13 @@ export default function Homepage() {
               <div className="absolute top-0 right-0 w-20 h-20 md:w-24 md:h-24 rounded-full opacity-5 transform translate-x-6 -translate-y-6 md:translate-x-10 md:-translate-y-10"
                 style={{ backgroundColor: colors.primary }} />
               <div className="relative z-10">
-                <h3 className="text-lg md:text-xl lg:text-2xl font-black mb-2 md:mb-3 text-gray-900">Iniciemos tu Proyecto</h3>
-                <p className="text-sm md:text-base mb-3 md:mb-4 text-gray-600 font-light">Completa el formulario y te contactaremos hoy mismo</p>
+                <h3 className="text-lg md:text-xl lg:text-2xl font-black mb-2 md:mb-3 text-gray-900">Cuéntanos tu idea</h3>
+                <p className="text-sm md:text-base mb-3 md:mb-4 text-gray-600 font-light">Rellena el formulario y te llamamos hoy mismo</p>
                 <form className="space-y-3 md:space-y-4">
                   <div className="grid grid-cols-1 gap-3">
                     <div className="space-y-1.5">
                       <label className="block font-bold text-[10px] md:text-xs uppercase tracking-wider text-gray-700">
-                        Tu Nombre *
+                        Tu nombre *
                       </label>
                       <input
                         type="text"
@@ -1238,7 +1252,7 @@ export default function Homepage() {
                     </div>
                     <div className="space-y-1.5">
                       <label className="block font-bold text-[10px] md:text-xs uppercase tracking-wider text-gray-700">
-                        Tu Teléfono *
+                        Tu teléfono *
                       </label>
                       <input
                         type="tel"
@@ -1249,7 +1263,7 @@ export default function Homepage() {
                     </div>
                     <div className="space-y-1.5">
                       <label className="block font-bold text-[10px] md:text-xs uppercase tracking-wider text-gray-700">
-                        Tu Email
+                        Tu email
                       </label>
                       <input
                         type="email"
@@ -1259,7 +1273,7 @@ export default function Homepage() {
                     </div>
                     <div className="space-y-1.5">
                       <label className="block font-bold text-[10px] md:text-xs uppercase tracking-wider text-gray-700">
-                        Tipo de Proyecto
+                        Qué necesitas
                       </label>
                       <select className="w-full px-2.5 py-2 md:px-3.5 md:py-2.5 rounded-lg md:rounded-xl border border-gray-200 focus:ring-1 focus:border-transparent transition-all duration-300 text-[13px] md:text-sm hover:border-gray-300 focus:border-green-500 font-light appearance-none bg-white">
                         <option>Selecciona el servicio...</option>
@@ -1270,10 +1284,10 @@ export default function Homepage() {
                     </div>
                     <div className="space-y-1.5">
                       <label className="block font-bold text-[10px] md:text-xs uppercase tracking-wider text-gray-700">
-                        Cuéntanos Sobre tu Espacio
+                        Cuéntanos sobre tu espacio
                       </label>
                       <textarea
-                        placeholder="Describe tu jardín actual, tus ideas, lo que te gustaría cambiar..."
+                        placeholder="Describe tu jardín actual, qué te gustaría cambiar, tus ideas..."
                         rows="3"
                         className="w-full px-2.5 py-2 md:px-3.5 md:py-2.5 rounded-lg md:rounded-xl border border-gray-200 focus:ring-1 focus:border-transparent resize-none transition-all duration-300 text-[13px] md:text-sm hover:border-gray-300 focus:border-green-500 font-light"
                       />
@@ -1287,14 +1301,14 @@ export default function Homepage() {
                     whileTap={{ scale: 0.98 }}
                   >
                     <span className="relative z-10 flex items-center justify-center space-x-1 md:space-x-1.5">
-                      <span>Enviar Solicitud</span>
+                      <span>Enviar mi idea</span>
                       <Icons.ChevronRight className="w-3 h-3 md:w-3.5 md:h-3.5 group-hover:translate-x-0.5 md:group-hover:translate-x-1 transition-transform duration-300" />
                     </span>
                     <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                   </motion.button>
                   <p className="text-center text-[10px] md:text-xs mt-2 md:mt-3 font-light text-gray-500">
                     <Icons.Shield className="w-2.5 h-2.5 md:w-3 md:h-3 inline-block mr-0.5 md:mr-1 mb-0.5 md:mb-0.5" />
-                    Tus datos están 100% seguros. Política de privacidad garantizada.
+                    Tus datos están seguros con nosotros. Respetamos tu privacidad.
                   </p>
                 </form>
               </div>

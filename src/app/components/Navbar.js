@@ -7,14 +7,19 @@ import Image from 'next/image';
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // TODAS LAS SECCIONES
   const navItems = [
+    { label: 'Inicio', href: '#inicio' },
     { label: 'Servicios', href: '#servicios' },
     { label: 'Proyectos', href: '#proyectos' },
+    { label: 'Experiencia', href: '#experiencia' },
+    { label: 'Clientes', href: '#clientes' },
     { label: 'Proceso', href: '#proceso' },
+    { label: 'Contacto', href: '#contacto', isButton: true }
   ];
 
-  const scrollToContact = () => {
-    document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToSection = (href) => {
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
     setIsMenuOpen(false);
   };
 
@@ -30,11 +35,16 @@ export default function Navbar() {
       >
         <div className="container mx-auto px-5 py-6">
           <div className="flex items-center justify-between">
-            {/* SOLO EL LOGO - SIN TEXTO */}
-            <motion.div
-              className="relative w-65 h-15"
+            {/* LOGO */}
+            <motion.a
+              href="#inicio"
+              className="relative w-65 h-15 block"
               whileHover={{ scale: 1.04 }}
               transition={{ type: "spring", stiffness: 400, damping: 15 }}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('#inicio');
+              }}
             >
               <Image
                 src="/logo_green.png"
@@ -44,42 +54,44 @@ export default function Navbar() {
                 sizes="64x"
                 priority
               />
-            </motion.div>
+            </motion.a>
 
-            {/* Menú desktop + botón a la derecha */}
-            <div className="hidden md:flex items-center space-x-8">
+            {/* Menú desktop */}
+            <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
               {navItems.map((item, idx) => (
-                <a
-                  key={idx}
-                  href={item.href}
-                  className="text-gray-700 font-medium py-2 relative group"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.querySelector(item.href)?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                >
-                  {item.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[rgb(120,185,45)] rounded-full transition-all duration-300 group-hover:w-full" />
-                </a>
+                item.isButton ? (
+                  <motion.button
+                    key={idx}
+                    onClick={() => scrollToSection(item.href)}
+                    className="px-6 py-2.5 rounded-full bg-[rgb(120,185,45)] text-white font-bold text-sm"
+                    whileHover={{
+                      y: -2,
+                      scale: 1.03,
+                      boxShadow: '0 8px 20px rgba(120, 185, 45, 0.35)'
+                    }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    {item.label}
+                  </motion.button>
+                ) : (
+                  <motion.button
+                    key={idx}
+                    className="text-gray-700 font-medium py-2 px-1 relative group text-sm lg:text-base"
+                    onClick={() => scrollToSection(item.href)}
+                    whileHover={{ y: -1 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    {item.label}
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[rgb(120,185,45)] rounded-full transition-all duration-300 group-hover:w-full" />
+                  </motion.button>
+                )
               ))}
-              <motion.button
-                onClick={scrollToContact}
-                className="px-6 py-2.5 rounded-full bg-[rgb(120,185,45)] text-white font-bold text-sm"
-                whileHover={{
-                  y: -2,
-                  scale: 1.03,
-                  boxShadow: '0 8px 20px rgba(120, 185, 45, 0.35)'
-                }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Contacto
-              </motion.button>
-            </div>
+            </nav>
 
-            {/* Menú móvil: hamburguesa + botón */}
+            {/* Menú móvil */}
             <div className="flex md:hidden items-center space-x-3">
               <motion.button
-                onClick={scrollToContact}
+                onClick={() => scrollToSection('#contacto')}
                 className="px-3.5 py-2 rounded-full bg-[rgb(120,185,45)] text-white font-bold text-xs"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -98,7 +110,7 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Menú móvil animado */}
+          {/* Menú móvil completo */}
           <AnimatePresence>
             {isMenuOpen && (
               <motion.div
@@ -109,16 +121,11 @@ export default function Navbar() {
                 transition={{ duration: 0.35 }}
               >
                 <div className="space-y-3 mt-4">
-                  {navItems.map((item, idx) => (
-                    <motion.a
+                  {navItems.filter(item => !item.isButton).map((item, idx) => (
+                    <motion.button
                       key={idx}
-                      href={item.href}
-                      className="block py-3.5 px-5 text-gray-700 rounded-xl font-medium"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        document.querySelector(item.href)?.scrollIntoView({ behavior: 'smooth' });
-                        setIsMenuOpen(false);
-                      }}
+                      className="block w-full text-left py-3.5 px-5 text-gray-700 rounded-xl font-medium"
+                      onClick={() => scrollToSection(item.href)}
                       whileHover={{
                         backgroundColor: 'rgba(120, 185, 45, 0.08)',
                         color: 'rgb(120, 185, 45)',
@@ -127,7 +134,7 @@ export default function Navbar() {
                       whileTap={{ scale: 0.99 }}
                     >
                       {item.label}
-                    </motion.a>
+                    </motion.button>
                   ))}
                 </div>
               </motion.div>
