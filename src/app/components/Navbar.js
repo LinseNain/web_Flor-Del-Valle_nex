@@ -181,7 +181,7 @@ export default function Navbar() {
 
       {/* Botón flotante de WhatsApp */}
       <motion.a
-        href="https://wa.me/34665764488?text=Hola,%20me%20interesa%20sus%20servicios%20de%20jardinería.%20Me%20gustaría%20obtener%20un%20presupuesto%20personalizado%20para%20diseño%20y%20mantenimiento%20de%20jardines.%20¿Podrían%20contactarme%20para%20hablar%20de%20mi%20proyecto?"
+        href="https://wa.me/34665764488?text=Hola,%20me%20interesa%20sus%20servicios%20de%20jardinería.%20Me%20gustaría%20obtener%20un%20presupuesto.%20¿Podrían%20contactarme%20para%20hablar%20de%20mi%20proyecto?"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-green-500 flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 group"
