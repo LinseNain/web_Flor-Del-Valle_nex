@@ -1232,7 +1232,7 @@ export default function Homepage() {
                     {
                       icon: Icons.Mail,
                       title: "Escríbenos",
-                      description: "jdra.flordelvalle@gmail.com",
+                      description: "flordelvalle.ec@gmail.com",
                       subtext: "Te contestamos en menos de 6 horas",
                       action: "Enviar mensaje"
                     },
@@ -1254,11 +1254,27 @@ export default function Homepage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="font-bold text-[12px] md:text-sm mb-0.5 md:mb-1 text-gray-900 truncate">{item.title}</h3>
-                        <p className="font-semibold text-[12px] md:text-sm mb-0.5 md:mb-1 text-green-600 break-words">{item.description}</p>
+                        {item.icon === Icons.Phone ? (
+                          <p className="font-semibold text-[12px] md:text-sm mb-0.5 md:mb-1 text-green-600 break-words">
+                            <a href="tel:+34665764488" className="hover:text-green-700 transition-colors">+34 665 764 488</a>, 
+                            <a href="tel:+34645956928" className="hover:text-green-700 transition-colors">+34 645 956 928</a>
+                          </p>
+                        ) : item.icon === Icons.Mail ? (
+                          <a 
+                            href="mailto:flordelvalle.ec@gmail.com"
+                            className="font-semibold text-[12px] md:text-sm mb-0.5 md:mb-1 text-green-600 break-words hover:text-green-700 transition-colors"
+                          >
+                            {item.description}
+                          </a>
+                        ) : (
+                          <p className="font-semibold text-[12px] md:text-sm mb-0.5 md:mb-1 text-green-600 break-words">{item.description}</p>
+                        )}
                         <p className="text-[10px] md:text-xs mb-1 md:mb-1.5 font-light text-gray-500 truncate">{item.subtext}</p>
-                        <button className="text-[10px] md:text-xs font-semibold uppercase tracking-wider hover:opacity-70 transition-opacity duration-300 text-green-600">
-                          {item.action} →
-                        </button>
+                        {item.action && (
+                          <button className="text-[10px] md:text-xs font-semibold uppercase tracking-wider hover:opacity-70 transition-opacity duration-300 text-green-600">
+                            {item.action} →
+                          </button>
+                        )}
                       </div>
                     </motion.div>
                   ))}

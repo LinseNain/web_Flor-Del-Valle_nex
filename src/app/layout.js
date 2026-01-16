@@ -5,7 +5,7 @@ import CookieConsent from './components/CookieConsent';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  metadataBase: new URL('https://www.flordelvallej.com'),
+  metadataBase: new URL('https://flordelvalle.ec'),
   title: {
     default: 'Flor Del Valle | Jardinero en Madrid - Podas y Mantenimiento de Jardines',
     template: '%s | Flor Del Valle',
@@ -29,7 +29,7 @@ export const metadata = {
     'podas Alcobendas',
     'mantenimiento jardines Alcobendas',
   ],
-  authors: [{ name: 'Flor Del Valle', url: 'https://www.flordelvallej.com' }],
+  authors: [{ name: 'Flor Del Valle', url: 'https://flordelvalle.ec' }],
   creator: 'Flor Del Valle',
   publisher: 'Flor Del Valle',
   formatDetection: {
@@ -38,12 +38,12 @@ export const metadata = {
     telephone: false,
   },
   alternates: {
-    canonical: 'https://www.flordelvallej.com',
+    canonical: 'https://flordelvalle.ec',
   },
   openGraph: {
     title: 'Flor Del Valle | Jardinero en Madrid - Podas y Mantenimiento de Jardines',
     description: 'Servicios profesionales de jardinería en Madrid. Especialistas en podas, mantenimiento de jardines y diseño de paisajismo. Jardinero profesional con +25 años de experiencia.',
-    url: 'https://www.flordelvallej.com',
+    url: 'https://flordelvalle.ec',
     siteName: 'Flor Del Valle',
     locale: 'es_ES',
     type: 'website',
@@ -86,7 +86,7 @@ export default function RootLayout({ children }) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    '@id': 'https://www.flordelvallej.com',
+    '@id': 'https://flordelvalle.ec',
     name: 'Flor Del Valle',
     description: 'Servicios profesionales de jardinería en Madrid. Especialistas en podas, mantenimiento de jardines y diseño de paisajismo.',
     url: 'https://www.flordelvallej.com',
@@ -180,12 +180,33 @@ export default function RootLayout({ children }) {
   return (
     <html lang="es">
       <head>
+        {/* Google Tag Manager */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TXLVZ55Z');`
+          }}
+        />
+        {/* End Google Tag Manager */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className={inter.className}>
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe 
+            src="https://www.googletagmanager.com/ns.html?id=GTM-TXLVZ55Z"
+            height="0" 
+            width="0" 
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
+        </noscript>
+        {/* End Google Tag Manager (noscript) */}
         {children}
         <CookieConsent />
       </body>
