@@ -19,7 +19,35 @@ export default function Navbar() {
   ];
 
   const scrollToSection = (href) => {
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    try {
+      const element = document.querySelector(href);
+      
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const offsetTop = rect.top + scrollTop - 100;
+        
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth'
+        });
+        
+        // Fallback para navegadores que no soportan behavior: 'smooth'
+        setTimeout(() => {
+          if (Math.abs(window.pageYOffset - offsetTop) > 5) {
+            window.scrollTo(0, offsetTop);
+          }
+        }, 100);
+      } else {
+        // Fallback positions
+        if (href === '#inicio') window.scrollTo(0, 0);
+        if (href === '#servicios') window.scrollTo(0, 800);
+        if (href === '#contacto') window.scrollTo(0, 5000);
+      }
+    } catch (error) {
+      console.error('Error en scroll:', error);
+    }
+    
     setIsMenuOpen(false);
   };
 
@@ -122,19 +150,24 @@ export default function Navbar() {
               >
                 <div className="space-y-3 mt-4">
                   {navItems.filter(item => !item.isButton).map((item, idx) => (
-                    <motion.button
+                    <a
                       key={idx}
-                      className="block w-full text-left py-3.5 px-5 text-gray-700 rounded-xl font-medium"
-                      onClick={() => scrollToSection(item.href)}
-                      whileHover={{
-                        backgroundColor: 'rgba(120, 185, 45, 0.08)',
-                        color: 'rgb(120, 185, 45)',
-                        x: 4
+                      href={item.href}
+                      className="block w-full text-left py-3.5 px-5 text-gray-700 rounded-xl font-medium hover:bg-green-50 hover:text-green-600 transition-colors"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection(item.href);
                       }}
-                      whileTap={{ scale: 0.99 }}
+                      onMouseDown={(e) => {
+                        // Para devtools mobile simulation
+                        if (e.button === 0) { // Left click
+                          e.preventDefault();
+                          scrollToSection(item.href);
+                        }
+                      }}
                     >
                       {item.label}
-                    </motion.button>
+                    </a>
                   ))}
                 </div>
               </motion.div>
