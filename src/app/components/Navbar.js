@@ -9,13 +9,12 @@ export default function Navbar() {
 
   // TODAS LAS SECCIONES
   const navItems = [
-    { label: 'Inicio', href: '#inicio' },
-    { label: 'Servicios', href: '#servicios' },
-    { label: 'Proyectos', href: '#proyectos' },
-    { label: 'Experiencia', href: '#experiencia' },
-    { label: 'Clientes', href: '#clientes' },
-    { label: 'Proceso', href: '#proceso' },
-    { label: 'Contacto', href: '#contacto', isButton: true }
+    { label: 'Inicio',     href: '#inicio'      },
+    { label: 'Servicios',  href: '#servicios'   },
+    { label: 'Proyectos',  href: '#proyectos'   },
+    { label: 'Zonas',      href: '#zonas'       },
+    { label: 'FAQ',        href: '#faq'         },
+    { label: 'Contacto',   href: '#contacto', isButton: true },
   ];
 
   const scrollToSection = (href) => {

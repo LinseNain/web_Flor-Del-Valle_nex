@@ -6,9 +6,8 @@ module.exports = {
   changefreq: 'weekly',
   priority: 0.7,
   sitemapSize: 7000,
-  exclude: ['/api/*', '/admin/*', '/server-sitemap.xml'],
-  
-  // Configuración del robots.txt
+  exclude: ['/api/*', '/admin/*'],
+
   robotsTxtOptions: {
     policies: [
       {
@@ -26,15 +25,9 @@ module.exports = {
         allow: '/',
       },
     ],
-    additionalSitemaps: [
-      // Si en el futuro agregas más sitemaps dinámicos
-      // 'https://www.flordelvallej.com/server-sitemap.xml',
-    ],
   },
-  
-  // Transformación de URLs para prioridades personalizadas
+
   transform: async (config, path) => {
-    // Prioridad alta para páginas principales
     if (path === '/') {
       return {
         loc: path,
@@ -43,18 +36,6 @@ module.exports = {
         lastmod: new Date().toISOString(),
       };
     }
-    
-    // Prioridad alta para servicios
-    if (path.includes('/servicios') || path.includes('/poda') || path.includes('/mantenimiento')) {
-      return {
-        loc: path,
-        changefreq: 'weekly',
-        priority: 0.9,
-        lastmod: new Date().toISOString(),
-      };
-    }
-    
-    // Prioridad media para otras páginas
     return {
       loc: path,
       changefreq: config.changefreq,

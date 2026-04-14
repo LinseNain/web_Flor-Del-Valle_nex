@@ -2,6 +2,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
+import NatureCanvas from './NatureCanvas';
+import CounterBar from './CounterBar';
+import ZonasSection from './ZonasSection';
+import FAQSection from './FAQSection';
 
 // 🔥 ICONOS (mantenidos igual)
 const Icons = {
@@ -448,7 +452,11 @@ export default function Homepage() {
       }
 
       // Insertar en Supabase
-      const { data, error } = await supabase
+      if (!supabase) {
+        throw new Error('El servicio de contacto no está disponible en este momento. Por favor llámanos directamente.');
+      }
+
+      const { error } = await supabase
         .from('contacts')
         .insert([
           {
@@ -456,7 +464,7 @@ export default function Homepage() {
             phone: formData.phone,
             email: formData.email || null,
             service: formData.service || null,
-            message: formData.message || null
+            message: formData.message || null,
           }
         ]);
 
@@ -610,135 +618,199 @@ export default function Homepage() {
 
   return (
     <div className="overflow-x-hidden">
-      {/* 🌟 HERO SECTION */}
+      {/* ═══════════════════════════════ HERO V2 ═══════════════════════════════ */}
       <section id="inicio" className="relative h-screen min-h-[700px] overflow-hidden">
+
+        {/* Background image + layered gradients */}
         <div className="absolute inset-0">
-          <img 
-            src="/inicio.jpg" 
-            alt="Jardín verde" 
+          <img
+            src="/inicio.jpg"
+            alt="Jardín profesional diseñado en Madrid"
             className="w-full h-full object-cover"
+            fetchPriority="high"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(108deg, rgba(2,8,1,0.88) 0%, rgba(4,14,2,0.72) 40%, rgba(0,0,0,0.3) 100%)',
+            }}
+          />
+          {/* Bottom vignette for stat bar readability */}
+          <div
+            className="absolute bottom-0 inset-x-0 h-2/5 pointer-events-none"
+            style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%)' }}
+          />
         </div>
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(15)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 md:w-2 md:h-2 rounded-full opacity-20"
-              style={{ backgroundColor: colors.primaryLight }}
-              animate={{
-                y: [0, -50, 0],
-                x: [0, Math.random() * 50 - 25, 0],
-                opacity: [0.2, 0.8, 0.2],
-              }}
-              transition={{
-                duration: 3 + Math.random() * 2,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-              }}
-            />
-          ))}
-        </div>
-        <div className="container mx-auto px-4 sm:px-6 md:px-8 relative z-10 h-full flex items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="text-white max-w-2xl"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="inline-flex items-center space-x-2 md:space-x-3 bg-white/10 backdrop-blur-lg text-white px-4 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl mb-6 md:mb-8 border border-white/20 shadow-lg md:shadow-2xl"
-            >
-              <Icons.Award className="text-green-300 w-4 h-4 md:w-5 md:h-5" />
-              <span className="font-bold text-xs md:text-sm tracking-widest uppercase">+ de 25 años Cuidando jardines </span>
-            </motion.div>
-            <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.5 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-4 md:mb-6 leading-none tracking-tight"
-            >
-              <span className="block">JARDINES</span>
-              <span className="block" style={{ color: colors.primaryLight }}>A TU MEDIDA</span>
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-              className="text-base md:text-lg lg:text-xl text-white/90 mb-8 md:mb-12 max-w-xl leading-relaxed font-light"
-            >
-              Creamos y mantenemos espacios donde las personas viven la naturaleza. En tu casa, cada rincón tiene sentido y cuidado.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
-              className="flex flex-col sm:flex-row gap-4 md:gap-6 items-stretch sm:items-start w-full"
-            >
-              <motion.button
-                onClick={() => scrollToSection('contacto')}
-                className="px-6 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl font-black text-sm md:text-base transition-all duration-300 shadow-lg md:shadow-xl w-full sm:w-auto sm:min-w-[220px] md:min-w-[260px] group relative overflow-hidden"
-                style={{ background: colors.gradientPrimary, color: colors.dark }}
-                whileHover={{ scale: 1.03, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <span className="relative z-10 flex items-center justify-center space-x-2 md:space-x-3">
-                  <span className="text-center">Cuéntanos tu idea</span>
-                  <Icons.ChevronRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform duration-300" />
-                </span>
-                <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-              </motion.button>
-              <button
-                onClick={() => scrollToSection('proyectos')}
-                className="border-2 border-white/30 text-white hover:bg-white hover:text-gray-900 px-6 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl font-bold text-sm md:text-base transition-all duration-300 w-full sm:w-auto sm:min-w-[220px] md:min-w-[260px] group backdrop-blur-sm"
-              >
-                <span className="group-hover:translate-x-1 md:group-hover:translate-x-2 transition-transform duration-300 inline-flex items-center justify-center space-x-2 md:space-x-3">
-                  <Icons.Camera className="w-4 h-4 md:w-5 md:h-5" />
-                  <span className="text-center">Ver nuestros trabajos</span>
-                </span>
-              </button>
-            </motion.div>
+
+        {/* Leaf canvas */}
+        <NatureCanvas />
+
+        {/* ── Main content ── */}
+        <div className="container mx-auto px-4 sm:px-6 md:px-8 relative z-10 h-full flex flex-col justify-center pb-32 md:pb-36">
+          <div className="max-w-3xl">
+
+            {/* Eyebrow */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.1 }}
-              className="flex flex-wrap justify-center gap-3 md:gap-4 mt-10 pt-6 md:mt-12 md:pt-8 border-t border-white/20"
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="flex flex-wrap items-center gap-3 mb-7 md:mb-9"
             >
+              <div
+                className="inline-flex items-center space-x-2.5 px-4 py-2 rounded-full border backdrop-blur-md"
+                style={{ background: 'rgba(138,211,65,0.1)', borderColor: 'rgba(138,211,65,0.3)' }}
+              >
+                <div className="flex space-x-0.5">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                  ))}
+                </div>
+                <span className="text-white/85 text-xs font-semibold">+25 años de experiencia en Madrid</span>
+              </div>
+            </motion.div>
+
+            {/* Headline */}
+            <motion.h1
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.38 }}
+              className="font-black leading-none tracking-tight mb-6 text-white"
+              style={{ fontSize: 'clamp(2.8rem, 8vw, 6.5rem)' }}
+            >
+              <span className="block">JARDINES</span>
+              <span
+                className="block"
+                style={{
+                  background: 'linear-gradient(135deg, #9ae053 0%, #c3f07a 50%, #8ad341 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >
+                QUE ENAMORAN
+              </span>
+            </motion.h1>
+
+            {/* Subline */}
+            <motion.p
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.58 }}
+              className="text-lg md:text-xl lg:text-2xl text-white/80 mb-10 md:mb-12 max-w-xl leading-relaxed font-light"
+            >
+              Diseñamos, creamos y mantenemos el jardín de tus sueños en Madrid.{' '}
+              <span style={{ color: '#9ae053' }} className="font-medium">
+                Presupuesto gratis
+              </span>
+              , sin compromiso.
+            </motion.p>
+
+            {/* CTA group */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.75 }}
+              className="flex flex-col sm:flex-row gap-4 items-start"
+            >
+              {/* Primary: Call */}
+              <a
+                href="tel:+34665764488"
+                className="group inline-flex items-center space-x-3 px-6 py-4 rounded-2xl font-black text-sm md:text-base transition-all duration-300 hover:-translate-y-1 active:scale-95"
+                style={{
+                  background: 'linear-gradient(135deg, #75b930 0%, #a6e072 100%)',
+                  color: '#030803',
+                  boxShadow: '0 6px 28px rgba(138,211,65,0.35)',
+                }}
+              >
+                <div className="w-9 h-9 bg-black/15 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Icons.Phone className="text-base" style={{ color: '#030803' }} />
+                </div>
+                <div className="leading-none">
+                  <div className="text-[9px] font-bold uppercase tracking-[0.18em] opacity-65 mb-1">
+                    Llamar ahora · Gratis
+                  </div>
+                  <div className="text-base md:text-lg font-black">+34 665 764 488</div>
+                </div>
+              </a>
+
+              {/* Secondary: Quote */}
+              <motion.button
+                onClick={() => scrollToSection('contacto')}
+                className="group inline-flex items-center space-x-3 px-6 py-4 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 border-2 text-white hover:bg-white/10 hover:-translate-y-1 backdrop-blur-sm active:scale-95"
+                style={{ borderColor: 'rgba(255,255,255,0.22)' }}
+                whileHover={{ borderColor: 'rgba(138,211,65,0.5)' }}
+              >
+                <Icons.Mail className="w-5 h-5 opacity-80" />
+                <span>Solicitar presupuesto</span>
+                <Icons.ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200 opacity-70" />
+              </motion.button>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* ── Bottom stat cards ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.1 }}
+          className="absolute bottom-0 inset-x-0 z-10 pb-6 md:pb-8"
+        >
+          <div className="container mx-auto px-4 sm:px-6 md:px-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3">
               {[
-                { number: "350+", label: "Jardines creados" },
-                { number: "25+", label: "Años de experiencia" },
-                { number: "100%", label: "Compromiso" },
-                { number: "150+", label: "Familias contentas" }
-              ].map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-base md:text-lg font-black text-white mb-1">{stat.number}</div>
-                  <div className="text-[10px] md:text-xs text-white/70 uppercase tracking-wider">{stat.label}</div>
+                { number: '60+',  label: 'Proyectos' },
+                { number: '25+',  label: 'Años exp.' },
+                { number: '98%',  label: 'Satisfacción' },
+                { number: '100%', label: 'Compromiso' },
+              ].map((s, i) => (
+                <div
+                  key={i}
+                  className="text-center px-3 py-3 md:py-4 rounded-xl backdrop-blur-md border"
+                  style={{
+                    background: 'rgba(255,255,255,0.06)',
+                    borderColor: 'rgba(255,255,255,0.1)',
+                  }}
+                >
+                  <div className="text-xl md:text-2xl font-black text-white leading-none">{s.number}</div>
+                  <div className="text-[9px] md:text-[10px] text-white/50 uppercase tracking-widest mt-1">{s.label}</div>
                 </div>
               ))}
-            </motion.div>
-          </motion.div>
-        </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Scroll hint — desktop right side */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.5 }}
-          className="absolute bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2"
+          transition={{ duration: 1, delay: 2 }}
+          className="absolute right-8 bottom-40 hidden lg:flex flex-col items-center space-y-3"
         >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
+          <div
+            className="w-px h-16"
+            style={{ background: 'linear-gradient(to bottom, transparent, rgba(138,211,65,0.5))' }}
+          />
+          <motion.button
+            animate={{ y: [0, 6, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="cursor-pointer"
             onClick={() => scrollToSection('servicios')}
+            className="w-9 h-9 rounded-full border flex items-center justify-center"
+            style={{
+              background: 'rgba(138,211,65,0.08)',
+              borderColor: 'rgba(138,211,65,0.3)',
+              color: '#8ad341',
+            }}
           >
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 flex items-center justify-center">
-              <Icons.ChevronDown className="w-5 h-5 md:w-6 md:h-6 text-white" />
-            </div>
-          </motion.div>
+            <Icons.ChevronDown className="w-4 h-4" />
+          </motion.button>
         </motion.div>
       </section>
+
+      {/* 📊 COUNTER BAR */}
+      <CounterBar />
 
       {/* 🎯 SERVICIOS SECTION */}
       <section id="servicios" className="py-16 md:py-24 lg:py-32 bg-white relative overflow-hidden">
@@ -999,6 +1071,9 @@ export default function Homepage() {
         </div>
       </section>
 
+      {/* 📍 ZONAS DE COBERTURA */}
+      <ZonasSection />
+
       {/* ⭐ EXPERIENCIA & TESTIMONIOS */}
       <section id="experiencia" className="py-16 md:py-24 lg:py-32 bg-white relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 md:px-8">
@@ -1141,6 +1216,9 @@ export default function Homepage() {
         </div>
       </section>
 
+      {/* ❓ FAQ SECTION */}
+      <FAQSection />
+
       {/* 🔄 PROCESO SECTION */}
       <section id="proceso" className="py-16 md:py-24 lg:py-32 bg-white relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 md:px-8">
@@ -1192,258 +1270,309 @@ export default function Homepage() {
         </div>
       </section>
 
-      {/* 📞 CONTACTO SECTION - CON SUPABASE */}
-      <section id="contacto" className="py-16 md:py-24 lg:py-32 bg-white relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 md:px-8">
-          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-start">
+      {/* ═══════════════════════════ CONTACTO V2 ═══════════════════════════ */}
+      <section id="contacto" className="relative overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[700px]">
 
-            {/* Columna izquierda */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7 }}
-              viewport={{ once: true }}
-              className="relative"
-            >
-              <div className="absolute -top-4 -left-4 w-16 h-16 md:w-20 md:h-20 rounded-full opacity-5"
-                style={{ backgroundColor: colors.primary }} />
-              <div className="absolute -bottom-4 -right-4 w-12 h-12 md:w-16 md:h-16 rounded-full opacity-5"
-                style={{ backgroundColor: colors.secondary }} />
-              <div className="relative z-10">
-                <div className="text-center lg:text-left mb-6 md:mb-8">
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-black mb-3 md:mb-4 tracking-tight text-gray-900">
-                    Hablemos de tu jardín
-                  </h2>
-                  <p className="text-base md:text-lg lg:text-xl text-gray-600 max-w-2xl leading-relaxed font-light">
-                    Cada jardín tiene su propia historia. Escribamos la tuya.
-                  </p>
-                  <div className="w-16 h-1 rounded-full mx-auto lg:mx-0 mt-3 md:mt-4"
-                    style={{ background: colors.gradientPrimary }} />
-                </div>
-                <div className="space-y-3 md:space-y-4 mb-4 md:mb-6">
-                  {[
-                    {
-                      icon: Icons.Phone,
-                      title: "Habla con nosotros",
-                      description: "+34 665 764 488, +34 645 956 928",
-                      subtext: "Lunes a Viernes: 9:00 - 18:00",
-                      action: "Llamar ahora"
-                    },
-                    {
-                      icon: Icons.Mail,
-                      title: "Escríbenos",
-                      description: "flordelvalle.ec@gmail.com",
-                      subtext: "Te contestamos en menos de 6 horas",
-                      action: "Enviar mensaje"
-                    },
-                    {
-                      icon: Icons.MapPin,
-                      title: "Estamos en Madrid",
-                      description: "Comunidad de Madrid",
-                      subtext: "Nos desplazamos sin coste adicional",
-                    }
-                  ].map((item, index) => (
-                    <motion.div
-                      key={index}
-                      className="flex items-start space-x-2 md:space-x-3 p-2.5 md:p-3.5 rounded-lg md:rounded-xl hover:bg-gray-50 transition-all duration-300 group border border-gray-100 w-full"
-                      whileHover={{ x: 1 }}
-                    >
-                      <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-sm md:shadow-md"
-                        style={{ background: colors.gradientPrimary }}>
-                        <item.icon className="text-[10px] md:text-sm text-white" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-bold text-[12px] md:text-sm mb-0.5 md:mb-1 text-gray-900 truncate">{item.title}</h3>
-                        {item.icon === Icons.Phone ? (
-                          <p className="font-semibold text-[12px] md:text-sm mb-0.5 md:mb-1 text-green-600 break-words">
-                            <a href="tel:+34665764488" className="hover:text-green-700 transition-colors">+34 665 764 488</a>, 
-                            <a href="tel:+34645956928" className="hover:text-green-700 transition-colors">+34 645 956 928</a>
-                          </p>
-                        ) : item.icon === Icons.Mail ? (
-                          <a 
-                            href="mailto:flordelvalle.ec@gmail.com"
-                            className="font-semibold text-[12px] md:text-sm mb-0.5 md:mb-1 text-green-600 break-words hover:text-green-700 transition-colors"
-                          >
-                            {item.description}
-                          </a>
-                        ) : (
-                          <p className="font-semibold text-[12px] md:text-sm mb-0.5 md:mb-1 text-green-600 break-words">{item.description}</p>
-                        )}
-                        <p className="text-[10px] md:text-xs mb-1 md:mb-1.5 font-light text-gray-500 truncate">{item.subtext}</p>
-                        {item.action && (
-                          <button className="text-[10px] md:text-xs font-semibold uppercase tracking-wider hover:opacity-70 transition-opacity duration-300 text-green-600">
-                            {item.action} →
-                          </button>
-                        )}
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-                <motion.div
-                  className="rounded-lg md:rounded-xl p-3 md:p-4 border-2 shadow-md"
-                  style={{ backgroundColor: colors.light, borderColor: colors.primary + '20' }}
-                  whileHover={{ y: -1 }}
-                >
-                  <div className="flex items-center space-x-2 md:space-x-3">
-                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl flex items-center justify-center shadow-sm md:shadow-md flex-shrink-0"
-                      style={{ background: colors.gradientPrimary }}>
-                      <Icons.Heart className="text-[12px] md:text-sm text-white" />
-                    </div>
-                    <div className="min-w-0">
-                      <h4 className="font-bold text-[12px] md:text-sm mb-0.5 md:mb-1 text-gray-900">Nuestra forma de trabajar</h4>
-                      <p className="text-[10px] md:text-xs font-light text-gray-600 truncate">
-                        Te escuchamos • Presupuestos claros • Resultados que te gustarán
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
+          {/* LEFT PANEL — dark, conversion-focused */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="relative flex flex-col justify-center px-8 md:px-12 lg:px-16 py-16 md:py-20 overflow-hidden"
+            style={{ background: 'linear-gradient(155deg, #030a02 0%, #071005 50%, #030a02 100%)' }}
+          >
+            {/* Background glow */}
+            <div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full pointer-events-none"
+              style={{ background: 'radial-gradient(circle, rgba(138,211,65,0.07) 0%, transparent 70%)' }}
+            />
+            <div
+              className="absolute top-0 left-0 right-0 h-px"
+              style={{ background: 'linear-gradient(90deg, transparent, rgba(138,211,65,0.4), transparent)' }}
+            />
+
+            <div className="relative z-10 max-w-md">
+              {/* Badge */}
+              <div
+                className="inline-flex items-center space-x-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest mb-8 border"
+                style={{ background: 'rgba(138,211,65,0.1)', borderColor: 'rgba(138,211,65,0.25)', color: '#8ad341' }}
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                <span>Respondemos en menos de 2 horas</span>
               </div>
-            </motion.div>
 
-            {/* Columna derecha - FORMULARIO CON SUPABASE */}
-            <motion.div
-              className="bg-white rounded-xl md:rounded-2xl p-5 md:p-6 shadow-md md:shadow-lg border border-gray-200 relative overflow-hidden"
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7 }}
-              viewport={{ once: true }}
-            >
-              <div className="absolute top-0 right-0 w-20 h-20 md:w-24 md:h-24 rounded-full opacity-5 transform translate-x-6 -translate-y-6 md:translate-x-10 md:-translate-y-10"
-                style={{ backgroundColor: colors.primary }} />
-              <div className="relative z-10">
-                <h3 className="text-lg md:text-xl lg:text-2xl font-black mb-2 md:mb-3 text-gray-900">Cuéntanos tu idea</h3>
-                <p className="text-sm md:text-base mb-3 md:mb-4 text-gray-600 font-light">Rellena el formulario y te llamamos hoy mismo</p>
+              <h2
+                className="font-black leading-tight tracking-tight text-white mb-4"
+                style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)' }}
+              >
+                Hablamos hoy.
+                <span
+                  className="block"
+                  style={{
+                    background: 'linear-gradient(135deg, #9ae053, #c3f07a)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                  }}
+                >
+                  Tu jardín no puede esperar.
+                </span>
+              </h2>
 
-                {/* Estado del formulario */}
-                {submitStatus.message && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={`mb-4 p-3 rounded-lg ${submitStatus.type === 'success'
+              <p className="text-white/55 text-base leading-relaxed mb-10 font-light">
+                Presupuesto gratuito, sin compromiso. Nos desplazamos a toda
+                la Comunidad de Madrid.
+              </p>
+
+              {/* Big phone CTA */}
+              <a
+                href="tel:+34665764488"
+                className="group flex items-center space-x-4 p-5 rounded-2xl border mb-4 transition-all duration-300 hover:border-green-500/60 hover:bg-white/5"
+                style={{ borderColor: 'rgba(138,211,65,0.2)', background: 'rgba(138,211,65,0.05)' }}
+              >
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ background: 'linear-gradient(135deg, #75b930, #a6e072)' }}
+                >
+                  <Icons.Phone className="text-lg" style={{ color: '#030a02' }} />
+                </div>
+                <div>
+                  <p className="text-[10px] text-white/40 uppercase tracking-widest mb-0.5">Llamar ahora</p>
+                  <p className="text-2xl font-black text-white group-hover:text-green-300 transition-colors">
+                    +34 665 764 488
+                  </p>
+                </div>
+                <Icons.ChevronRight className="ml-auto text-white/30 group-hover:text-green-400 group-hover:translate-x-1 transition-all w-5 h-5" />
+              </a>
+
+              {/* Secondary contact */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
+                <a
+                  href="tel:+34645956928"
+                  className="flex items-center space-x-3 p-3.5 rounded-xl border transition-all duration-200 hover:bg-white/5 group"
+                  style={{ borderColor: 'rgba(255,255,255,0.07)' }}
+                >
+                  <Icons.Phone className="w-4 h-4 flex-shrink-0" style={{ color: '#8ad341' }} />
+                  <div>
+                    <p className="text-[9px] text-white/35 uppercase tracking-wider">Teléfono 2</p>
+                    <p className="text-sm font-bold text-white/80 group-hover:text-white transition-colors">+34 645 956 928</p>
+                  </div>
+                </a>
+
+                <a
+                  href="mailto:flordelvalle.ec@gmail.com"
+                  className="flex items-center space-x-3 p-3.5 rounded-xl border transition-all duration-200 hover:bg-white/5 group"
+                  style={{ borderColor: 'rgba(255,255,255,0.07)' }}
+                >
+                  <Icons.Mail className="w-4 h-4 flex-shrink-0" style={{ color: '#8ad341' }} />
+                  <div>
+                    <p className="text-[9px] text-white/35 uppercase tracking-wider">Email</p>
+                    <p className="text-[11px] font-bold text-white/80 group-hover:text-white transition-colors break-all">
+                      flordelvalle.ec@gmail.com
+                    </p>
+                  </div>
+                </a>
+
+                <a
+                  href="https://wa.me/34665764488?text=Hola%2C%20me%20gustaría%20obtener%20un%20presupuesto."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-3 p-3.5 rounded-xl border transition-all duration-200 hover:bg-white/5 group"
+                  style={{ borderColor: 'rgba(255,255,255,0.07)' }}
+                >
+                  <svg className="w-4 h-4 flex-shrink-0" fill="#8ad341" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a9.87 9.87 0 00-5.031-1.378C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.76l-.002-.005z"/>
+                  </svg>
+                  <div>
+                    <p className="text-[9px] text-white/35 uppercase tracking-wider">WhatsApp</p>
+                    <p className="text-sm font-bold text-white/80 group-hover:text-white transition-colors">Chatear ahora</p>
+                  </div>
+                </a>
+
+                <div
+                  className="flex items-center space-x-3 p-3.5 rounded-xl border"
+                  style={{ borderColor: 'rgba(255,255,255,0.07)' }}
+                >
+                  <Icons.Clock className="w-4 h-4 flex-shrink-0" style={{ color: '#8ad341' }} />
+                  <div>
+                    <p className="text-[9px] text-white/35 uppercase tracking-wider">Horario</p>
+                    <p className="text-[11px] font-bold text-white/70">L–V 9–18h · S 9–15h</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Trust badge */}
+              <div
+                className="flex items-center space-x-3 p-4 rounded-xl border"
+                style={{ background: 'rgba(138,211,65,0.06)', borderColor: 'rgba(138,211,65,0.15)' }}
+              >
+                <Icons.Shield className="w-5 h-5 flex-shrink-0" style={{ color: '#8ad341' }} />
+                <p className="text-xs text-white/60">
+                  Empresa con seguro de responsabilidad civil · Presupuesto claro y sin sorpresas
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* RIGHT PANEL — form */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            viewport={{ once: true }}
+            className="flex flex-col justify-center px-8 md:px-12 lg:px-16 py-16 md:py-20 bg-white"
+          >
+            <div className="max-w-md w-full mx-auto lg:mx-0">
+              {/* Header */}
+              <div className="mb-8">
+                <p
+                  className="text-xs font-black uppercase tracking-[0.2em] mb-3"
+                  style={{ color: '#8ad341' }}
+                >
+                  Presupuesto gratuito
+                </p>
+                <h3 className="text-2xl md:text-3xl font-black text-gray-900 leading-tight mb-2">
+                  Cuéntanos tu idea
+                </h3>
+                <p className="text-gray-400 text-sm font-light">
+                  Rellena el formulario y te contactamos hoy mismo.
+                </p>
+                <div
+                  className="w-12 h-1 rounded-full mt-4"
+                  style={{ background: 'linear-gradient(90deg, #75b930, #a6e072)' }}
+                />
+              </div>
+
+              {/* Form status */}
+              {submitStatus.message && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`mb-6 p-4 rounded-xl text-sm flex items-start space-x-3 ${
+                    submitStatus.type === 'success'
                       ? 'bg-green-50 border border-green-200 text-green-700'
                       : 'bg-red-50 border border-red-200 text-red-700'
-                      }`}
-                  >
-                    <div className="flex items-center">
-                      {submitStatus.type === 'success' ? (
-                        <Icons.Check className="w-5 h-5 mr-2 flex-shrink-0" />
-                      ) : (
-                        <Icons.Shield className="w-5 h-5 mr-2 flex-shrink-0" />
-                      )}
-                      <p className="text-sm">{submitStatus.message}</p>
-                    </div>
-                  </motion.div>
-                )}
+                  }`}
+                >
+                  <Icons.Check className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                  <p>{submitStatus.message}</p>
+                </motion.div>
+              )}
 
-                <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
-                  <div className="grid grid-cols-1 gap-3">
-                    <div className="space-y-1.5">
-                      <label className="block font-bold text-[10px] md:text-xs uppercase tracking-wider text-gray-700">
-                        Tu nombre *
-                      </label>
-                      <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        placeholder="Cómo te llamas"
-                        required
-                        className="w-full px-2.5 py-2 md:px-3.5 md:py-2.5 rounded-lg md:rounded-xl border border-gray-200 focus:ring-1 focus:border-transparent transition-all duration-300 text-[13px] md:text-sm hover:border-gray-300 focus:border-green-500 font-light"
-                        disabled={isSubmitting}
-                      />
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="block font-bold text-[10px] md:text-xs uppercase tracking-wider text-gray-700">
-                        Tu teléfono *
-                      </label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        placeholder="Para llamarte personalmente"
-                        required
-                        className="w-full px-2.5 py-2 md:px-3.5 md:py-2.5 rounded-lg md:rounded-xl border border-gray-200 focus:ring-1 focus:border-transparent transition-all duration-300 text-[13px] md:text-sm hover:border-gray-300 focus:border-green-500 font-light"
-                        disabled={isSubmitting}
-                      />
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="block font-bold text-[10px] md:text-xs uppercase tracking-wider text-gray-700">
-                        Tu email
-                      </label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        placeholder="tu@email.com"
-                        className="w-full px-2.5 py-2 md:px-3.5 md:py-2.5 rounded-lg md:rounded-xl border border-gray-200 focus:ring-1 focus:border-transparent transition-all duration-300 text-[13px] md:text-sm hover:border-gray-300 focus:border-green-500 font-light"
-                        disabled={isSubmitting}
-                      />
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="block font-bold text-[10px] md:text-xs uppercase tracking-wider text-gray-700">
-                        Qué necesitas
-                      </label>
-                      <select
-                        name="service"
-                        value={formData.service}
-                        onChange={handleInputChange}
-                        className="w-full px-2.5 py-2 md:px-3.5 md:py-2.5 rounded-lg md:rounded-xl border border-gray-200 focus:ring-1 focus:border-transparent transition-all duration-300 text-[13px] md:text-sm hover:border-gray-300 focus:border-green-500 font-light appearance-none bg-white"
-                        disabled={isSubmitting}
-                      >
-                        <option value="">Selecciona el servicio...</option>
-                        {services.map((service, i) => (
-                          <option key={i} value={service.title}>{service.title}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="block font-bold text-[10px] md:text-xs uppercase tracking-wider text-gray-700">
-                        Cuéntanos sobre tu espacio
-                      </label>
-                      <textarea
-                        name="message"
-                        value={formData.message}
-                        onChange={handleInputChange}
-                        placeholder="Describe tu jardín actual, qué te gustaría cambiar, tus ideas..."
-                        rows="3"
-                        className="w-full px-2.5 py-2 md:px-3.5 md:py-2.5 rounded-lg md:rounded-xl border border-gray-200 focus:ring-1 focus:border-transparent resize-none transition-all duration-300 text-[13px] md:text-sm hover:border-gray-300 focus:border-green-500 font-light"
-                        disabled={isSubmitting}
-                      />
-                    </div>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Name + Phone side by side on md */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500">
+                      Nombre *
+                    </label>
+                    <input
+                      type="text" name="name"
+                      value={formData.name} onChange={handleInputChange}
+                      placeholder="Tu nombre"
+                      required disabled={isSubmitting}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm font-light text-gray-900 placeholder-gray-300 transition-all duration-200 outline-none focus:border-green-400 focus:ring-2 focus:ring-green-100 hover:border-gray-300"
+                    />
                   </div>
-                  <motion.button
-                    type="submit"
+                  <div className="space-y-1.5">
+                    <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500">
+                      Teléfono *
+                    </label>
+                    <input
+                      type="tel" name="phone"
+                      value={formData.phone} onChange={handleInputChange}
+                      placeholder="+34 6XX XXX XXX"
+                      required disabled={isSubmitting}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm font-light text-gray-900 placeholder-gray-300 transition-all duration-200 outline-none focus:border-green-400 focus:ring-2 focus:ring-green-100 hover:border-gray-300"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500">
+                    Email
+                  </label>
+                  <input
+                    type="email" name="email"
+                    value={formData.email} onChange={handleInputChange}
+                    placeholder="tu@email.com"
                     disabled={isSubmitting}
-                    className="w-full py-2.5 md:py-3 rounded-lg md:rounded-xl font-bold text-sm md:text-base transition-all duration-300 shadow-sm md:shadow-md hover:shadow-md relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
-                    style={{ background: colors.gradientPrimary, color: colors.dark }}
-                    whileHover={{ scale: isSubmitting ? 1 : 1.02, y: isSubmitting ? 0 : -1 }}
-                    whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                  >
-                    <span className="relative z-10 flex items-center justify-center space-x-1 md:space-x-1.5">
-                      {isSubmitting ? (
-                        <>
-                          <span>Enviando...</span>
-                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                        </>
-                      ) : (
-                        <>
-                          <span>Enviar mi idea</span>
-                          <Icons.ChevronRight className="w-3 h-3 md:w-3.5 md:h-3.5 group-hover:translate-x-0.5 md:group-hover:translate-x-1 transition-transform duration-300" />
-                        </>
-                      )}
-                    </span>
-                    <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                  </motion.button>
-                  <p className="text-center text-[10px] md:text-xs mt-2 md:mt-3 font-light text-gray-500">
-                    <Icons.Shield className="w-2.5 h-2.5 md:w-3 md:h-3 inline-block mr-0.5 md:mr-1 mb-0.5 md:mb-0.5" />
-                    Tus datos están seguros con nosotros. Respetamos tu privacidad.
-                  </p>
-                </form>
-              </div>
-            </motion.div>
-          </div>
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm font-light text-gray-900 placeholder-gray-300 transition-all duration-200 outline-none focus:border-green-400 focus:ring-2 focus:ring-green-100 hover:border-gray-300"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500">
+                    Servicio que necesitas
+                  </label>
+                  <div className="relative">
+                    <select
+                      name="service"
+                      value={formData.service} onChange={handleInputChange}
+                      disabled={isSubmitting}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm font-light text-gray-900 transition-all duration-200 outline-none focus:border-green-400 focus:ring-2 focus:ring-green-100 hover:border-gray-300 appearance-none bg-white cursor-pointer"
+                    >
+                      <option value="">Selecciona un servicio...</option>
+                      {services.map((s, i) => (
+                        <option key={i} value={s.title}>{s.title}</option>
+                      ))}
+                    </select>
+                    <Icons.ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500">
+                    Cuéntanos más
+                  </label>
+                  <textarea
+                    name="message"
+                    value={formData.message} onChange={handleInputChange}
+                    placeholder="Describe tu espacio, qué necesitas, ideas que tengas..."
+                    rows="4" disabled={isSubmitting}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm font-light text-gray-900 placeholder-gray-300 transition-all duration-200 outline-none focus:border-green-400 focus:ring-2 focus:ring-green-100 hover:border-gray-300 resize-none"
+                  />
+                </div>
+
+                <motion.button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-4 rounded-xl font-black text-sm md:text-base relative overflow-hidden group transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed hover:-translate-y-0.5"
+                  style={{
+                    background: isSubmitting
+                      ? '#9ae053'
+                      : 'linear-gradient(135deg, #75b930 0%, #a6e072 100%)',
+                    color: '#030a02',
+                    boxShadow: isSubmitting ? 'none' : '0 6px 24px rgba(138,211,65,0.3)',
+                  }}
+                  whileHover={{ scale: isSubmitting ? 1 : 1.01 }}
+                  whileTap={{ scale: isSubmitting ? 1 : 0.99 }}
+                >
+                  <span className="relative z-10 flex items-center justify-center space-x-2">
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                        <span>Enviando tu idea...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Enviar y recibir presupuesto gratis</span>
+                        <Icons.ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </>
+                    )}
+                  </span>
+                  <div className="absolute inset-0 bg-white/20 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                </motion.button>
+
+                <p className="text-center text-[10px] text-gray-400 flex items-center justify-center space-x-1.5">
+                  <Icons.Shield className="w-3 h-3" />
+                  <span>Datos protegidos · Nunca spam · Solo te llamamos una vez</span>
+                </p>
+              </form>
+            </div>
+          </motion.div>
         </div>
       </section>
     </div>
